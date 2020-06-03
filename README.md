@@ -1,6 +1,10 @@
 # stock-trading-app
 ## Instuctions
 
+
+## Technologys
+
+
 ## Wireframe
 sql/postgres database
 
