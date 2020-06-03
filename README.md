@@ -6,15 +6,13 @@
 
 
 ## Wireframe
-sql/postgres database
-
-django backend
-
-react frontend
-
+sql/postgres database  
+django backend  
+react frontend  
 ## User journeys
-As a User, I want to be able to create an account so I can login.
-As a User, I want to be choose what stocks I want to monitor.
+As a User, I want to be able to create an account so I can login.  
+As a User, I want to be choose what stocks I want to monitor.  
+As a User, I want to be able to see a graph to compare my stocks.
 ## Database schemas
 ### Stocks
 | Id    | date-time       |stock1|stock2|
