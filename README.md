@@ -1,16 +1,16 @@
 # stock-trading-app
 ## Instuctions
 
-## wireframe
-sql/postgres
+## Wireframe
+sql/postgres database
 
 django backend
 
 react frontend
 
-## user journeys
+## User journeys
 
-## database schemas
+## Database schemas
 ### stocks
 | Id    | date-time       |stock1|stock2|
 | ----- |:---------------:| ----:| ----:|
