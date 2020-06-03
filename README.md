@@ -3,8 +3,11 @@
 
 ## wireframe
 sql/postgres
+
 django backend
+
 react frontend
+
 ## user journeys
 
 ## database schemas
