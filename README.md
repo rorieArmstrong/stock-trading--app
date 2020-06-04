@@ -30,8 +30,8 @@ One massive table with foriegn keys
 |  2 |       1      |  MSFT |    5   |
 
 ### Users
-| id | email              | password        | username    |
-|----|--------------------|-----------------|-------------|
-| 1  | bob@gmail.com      | Bobert123       | bob_smith   |   
-| 2  | kim@yahoo.co.uk    | kImKiMkIm       | Kim         |   
-| 3  | spam@microsoft.com | saseESDSA129023 | test_user_1 |
+| id |        email       |     password    |   username  | balance |
+|:--:|:------------------:|:---------------:|:-----------:|:-------:|
+|  1 |    bob@gmail.com   |    Bobert123    |  bob_smith  |   1000  |
+|  2 |   kim@yahoo.co.uk  |    kImKiMkIm    |     Kim     |   500   |
+|  3 | spam@microsoft.com | saseESDSA129023 | test_user_1 |    0    |
