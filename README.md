@@ -15,15 +15,6 @@ As a User, I want to be choose what stocks I want to monitor.
 As a User, I want to be able to see a graph to compare my stocks.
 ## Database schemas
 ### Stocks
-Option 1:  
-New table for each user
-| Id | Stock | Amount |
-|:--:|:-----:|:------:|
-|  1 |  APPL |   10   |
-|  2 |  MSFT |    5   |  
-
-Option 2:  
-One massive table with foriegn keys
 | Id | user_id (fk) | Stock | Amount |
 |:--:|:------------:|:-----:|:------:|
 |  1 |       1      |  APPL |   10   |
