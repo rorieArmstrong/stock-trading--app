@@ -15,11 +15,17 @@ As a User, I want to be choose what stocks I want to monitor.
 As a User, I want to be able to see a graph to compare my stocks.
 ## Database schemas
 ### Stocks
-| Id    | date-time       |stock1|stock2|
-| ----- |:---------------:| ----:| ----:|
-| 1     | 07:00 03/06/2020| $180 | $150 |
-| 2     | 08:00 03/06/2020| $150 | $180 |
-| 3     | 09:00 03/06/2020| $100 | $200 |
+Option 1:  
+| Id | Stock | Amount |
+|:--:|:-----:|:------:|
+|  1 |  APPL |   10   |
+|  2 |  MSFT |    5   |  
+
+Option 2:
+| Id | user_id (fk) | Stock | Amount |
+|:--:|:------------:|:-----:|:------:|
+|  1 |       1      |  APPL |   10   |
+|  2 |       1      |  MSFT |    5   |
 
 ### Users
 | id | email              | password        | username    |
