@@ -22,16 +22,27 @@ django backend
 react frontend  
 ## User journeys
 As a User, I want to be able to create an account so I can login.  
+
 As a User, I want to be choose what stocks I want to monitor.  
-As a User, I want to be able to see a graph to compare my stocks.
+
+As a User, I want to be able to see a graph to compare my stocks.  
+
 When I login I want to see my dashboard showing my balance / portfolio value and the stocks I’m watching.  
+
 I can choose to go to charts or add stocks to watch (on different pages) using buttons.  
+
 I can search for stocks to add to my potfolio.  
+
 I can add to the stocks I want to watch on your dashboard and charting system.  
+
 Once done you can go back to your dashboard and view the price for the stocks on your watchlist.  
+
 I can buy or sell based on the current market price (provided by API).  
+
 When I buy or sell it updates my balance and stock amount.  
+
 I can pick to view the chart (provided by TradingView widget) which has my watchlist of stocks charted historically and relatively current. (This widget is very customisable and interactive).  
+
 On logout the balance and watchlist is persistent so when user logs back in they are able to see everything as it were. The only variable would be the portfolio value which is dictated by the current pricing of stocks they hold.  
 
 ## Database schemas
