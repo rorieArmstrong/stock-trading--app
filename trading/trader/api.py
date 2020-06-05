@@ -1,9 +1,9 @@
-from .models import User, Stocks
+from .models import CustomUser, Stocks
 from rest_framework import viewsets, permissions
 from .serializers import UserSerializer, StockSerializer
 # Lead Viewset
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     permission_classes= [
         permissions.AllowAny
     ]
