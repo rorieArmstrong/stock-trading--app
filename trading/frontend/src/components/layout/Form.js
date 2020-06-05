@@ -6,25 +6,6 @@ export class Form extends Component {
         data: [],
         loaded: false
     }
-    // componentDidMount() {
-    //     fetch("api/users")
-    //         .then(response => {
-    //             if (response.status > 400) {
-    //                 return this.setState(() => {
-    //                     return { placeholder: "Something went wrong!" };
-    //                 });
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             this.setState(() => {
-    //                 return {
-    //                     data,
-    //                     loaded: true
-    //                 };
-    //             });
-    //         });
-    // }
 
     render() {
 
