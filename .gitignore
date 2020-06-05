@@ -1,4 +1,4 @@
 .vscode
 Pipfile.lock
 __pycache__
-__db.sqlite3__
+db.sqlite3
