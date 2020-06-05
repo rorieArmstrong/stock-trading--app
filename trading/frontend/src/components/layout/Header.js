@@ -9,6 +9,9 @@ export class Header extends Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a className="navbar-brand" href="#">Trading Platform</a>
+                <li class="nav-item">
+                    <a class="nav-link" href= "/accounts/logout/">Features</a>
+                </li>
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                 
                 </ul>
