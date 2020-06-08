@@ -2,11 +2,13 @@ from .models import CustomUser, Stocks
 from rest_framework import viewsets, permissions
 from .serializers import UserSerializer, StockSerializer
 from django.http import Http404
+from rest_framework.permissions import IsAuthenticated
 # Lead Viewset
 class UserViewSet(viewsets.ModelViewSet):
-    permission_classes= [
+    """ permission_classes= [
         permissions.AllowAny
-    ]
+    ] """
+    permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     def get_queryset(self):
         """
@@ -17,9 +19,10 @@ class UserViewSet(viewsets.ModelViewSet):
         return CustomUser.objects.filter(username=user)
 
 class StockViewSet(viewsets.ModelViewSet):
-    permission_classes= [
+    """ permission_classes= [
         permissions.AllowAny
-    ]
+    ] """
+    permission_classes = [IsAuthenticated]
     serializer_class = StockSerializer
     def get_queryset(self):
         """
