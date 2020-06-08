@@ -5,42 +5,19 @@ class Graph extends Component {
         super(props);
         this._ref = React.createRef();
         this.state = {
-            watchlist: [
-                "AAPL",
-                "IBM",
-                "TSLA",
-                "AMD",
-                "MSFT",
-                "GOOG"
-            ],
-            obj: {
-                "container_id": "watchlist",
-                    "width": 998,
-                    "height": 610,
-                    "symbol": "NASDAQ:AAPL",
-                    "interval": "D",
-                    "timezone": "exchange",
-                    "theme": "light",
-                    "style": "1",
-                    "toolbar_bg": "#f1f3f6",
-                    "withdateranges": true,
-                    "allow_symbol_change": true,
-                    "save_image": false,
-                    "watchlist": [
-                        "AAPL",
-                        "IBM",
-                        "TSLA",
-                        "AMD",
-                        "MSFT",
-                        "GOOG"
-                    ],
-                    "locale": "uk"
-                }
+            watchlist: ["AAPL","IBM","TSLA","AMD","MSFT","GOOG"]
         }
     }
 
-    obj = () => { return {
-        "container_id": "watchlist",
+    componentDidMount() {
+        const script = document.createElement('script');
+        const fun = document.createElement('script')
+        script.src = 'https://s3.tradingview.com/tv.js'
+        script.type = 'text/javascript';
+        fun.type = 'text/javascript';
+        fun.async = true
+        fun.innerHTML = 'new TradingView.widget(' + JSON.stringify({
+            "container_id": "watchlist",
             "width": 998,
             "height": 610,
             "symbol": "NASDAQ:AAPL",
@@ -54,47 +31,21 @@ class Graph extends Component {
             "save_image": false,
             "watchlist": this.state.watchlist,
             "locale": "uk"
-        }}
-
-    // componentDidMount() {
-    //     const script = document.createElement('script');
-    //     script.src = 'https://s3.tradingview.com/tv.js'
-    //     script.async = true;
-    //     script.innerHTML = {
-    //         "container_id": "watchlist",
-    //         "width": 998,
-    //         "height": 610,
-    //         "symbol": "NASDAQ:AAPL",
-    //         "interval": "D",
-    //         "timezone": "exchange",
-    //         "theme": "light",
-    //         "style": "1",
-    //         "toolbar_bg": "#f1f3f6",
-    //         "withdateranges": true,
-    //         "allow_symbol_change": true,
-    //         "save_image": false,
-    //         "watchlist": this.state.watchlist,
-    //         "locale": "uk"
-    //     }
-    //     console.log(script)
-    //     console.log(this._ref)
-    //     this._ref.current.appendChild(script);
-    // }
+        }) + ')'
+        document.getElementById('container').appendChild(script);
+        document.getElementById('container').appendChild(fun);
+    }
     
     render() {
         return (
             <div>
-                <div className="tradingview-widget-container">
+                <div className="tradingview-widget-container" id='container'>
                     <div id="watchlist"></div>
                     <div className="tradingview-widget-copyright">
                         <a href="https://uk.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank">
-                            <span className="blue-text"></span>
+                            <span className="blue-text">Chart</span>
                         </a> by TradingView
                     </div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-                    <script type="text/javascript">
-                        new TradingView.widget({this.state.obj})
-                    </script>
                 </div>
             </div>
         )
