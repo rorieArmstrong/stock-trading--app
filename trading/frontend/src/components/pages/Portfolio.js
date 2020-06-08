@@ -23,9 +23,8 @@ class Portfolio extends Component {
                     <h3>Value: {}</h3>
                     <h3>balance: {}</h3>
                     <Link to='/graph'><button>Add Stock to Watchlist</button></Link>
-                </div>
-                <div>
-                
+                    <button onClick={this.buy()}Buy></button>
+                    <button onClick={this.sell()}>Sell</button>
                 </div>
             </div>
         );

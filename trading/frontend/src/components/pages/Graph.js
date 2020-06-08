@@ -6,7 +6,7 @@ class Graph extends Component {
         super(props);
         this._ref = React.createRef();
         this.state = {
-            watchlist: ["AAPL","IBM","TSLA","AMD","MSFT","GOOG","FB"]
+            watchlist: ["AAPL","IBM","TSLA","AMD","MSFT","GOOG","FB","RMG",'NTDMF', 'RIG', 'RRC', 'COTY', 'SSL']
         }
     }
     
