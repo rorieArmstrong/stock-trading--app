@@ -3,10 +3,30 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+<div class="sidenav">
+  <div class="login-main-text">
+    <h2>Login Page</h2>
+    <p>Login or register from here to access.</p>
+  </div>
+</div>
+<div class="main">
+  <div class="col-md-6 col-sm-12">
+    <div class="login-form">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150"
+            required="" id="id_username" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" autocomplete="current-password" required="" id="id_password"
+            placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-black">Login</button>
+        <a href="/signup"><button type="button" class="btn btn-secondary">Register</button></a>
+      </form>
+    </div>
+  </div>
+</div>
+<h3 id="testworking">HI</h3>
 {% endblock %}
