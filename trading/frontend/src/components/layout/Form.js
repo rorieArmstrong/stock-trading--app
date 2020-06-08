@@ -20,7 +20,7 @@ export class Form extends Component {
     }
 
     updateUser(id){
-        axios.put(`api/users/${id}/`, 
+        axios.patch(`api/users/${id}/`, 
         {email:"fire@gmail.com"},
         {
             headers: {
