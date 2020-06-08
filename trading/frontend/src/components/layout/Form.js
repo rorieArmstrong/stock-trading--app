@@ -1,14 +1,44 @@
 import React, { Component } from 'react'
+import axios from "axios"
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 
 export class Form extends Component {
 
     state = {
         data: [],
-        loaded: false
+        loaded: false,
+        userID: null
+    }
+
+    getUser(){
+        axios.get("api/users")
+        .then(response => {
+            console.log(response)
+            this.setState({userID:response.data[0].id})
+        })
+    }
+
+    updateUser(id){
+        axios.put(`api/users/${id}/`, 
+        {email:"fire@gmail.com"},
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response =>{
+            console.log(response)
+        })
+    }
+
+    componentDidMount(){
+        this.getUser()
     }
 
     render() {
-
+        console.log(this.state.userID)
+        this.state.userID ? this.updateUser(this.state.userID) : console.log("nothing")
         return (
             <div>
                 <h1>Welcome to the trading Platform</h1>
@@ -18,7 +48,7 @@ export class Form extends Component {
                     <form action="api/users/" method="POST">
 
                         <div className="form-group">
-                            <label>email</label>
+                            <label>yo</label>
                             <input
                                 className="form-control"
                                 type="email"

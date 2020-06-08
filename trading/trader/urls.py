@@ -3,5 +3,6 @@ from .api import UserViewSet, StockViewSet
 
 router = routers.DefaultRouter()
 router.register('stocks', StockViewSet, 'trader')
+router.register('^stocks/user/(?P<user>.+)', StockViewSet, 'trader')
 router.register('users', UserViewSet, 'trader')
 urlpatterns = router.urls

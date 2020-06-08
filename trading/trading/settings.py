@@ -124,12 +124,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-""" REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
-} """
-
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/d'
 LOGOUT_REDIRECT_URL = 'home'
