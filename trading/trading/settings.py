@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'trader',
     'rest_framework',
-    "accounts.apps.AccountsConfig"
+    "accounts.apps.AccountsConfig",
+    "frontend"
 ]
 
 MIDDLEWARE = [
@@ -80,9 +81,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    } ,
+    },
     'production': {
-        
+
     }
 }
 
@@ -123,14 +124,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-""" REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
-} """
-
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/d'
 LOGOUT_REDIRECT_URL = 'home'
 
 AUTH_USER_MODEL = 'trader.CustomUser'
