@@ -6,7 +6,7 @@ Get Django authentication working and react implemented. No Blockers
 
 ### Monday - 08/06
 * Huseyin:
-** Yesterday: Wrote some API endpoints
+    ** Yesterday: Wrote some API endpoints
 ** Today: Finish API endpoints. No blocker
 
 * Rory:
