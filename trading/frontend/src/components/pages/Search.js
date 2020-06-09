@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 const stocks = require('stock-ticker-symbol');
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 
 class Search extends Component {
     constructor(props) {
@@ -26,11 +28,13 @@ class Search extends Component {
 
     addToWatchlist = (symbol) => {
         axios.post('/api/stocks/',{
-            stock_symbol: symbol,
-            stocks_bought_number: 0,
-            bought_at_price: 0,
-            userID: this.state.userID
-        })
+            "stock_symbol": symbol,
+            "stocks_bought_number": 0,
+            "bought_at_price": 0,
+            "userID": this.state.userID
+            }, {headers:{'Content-Type': 'application/json'}})
+        .then(res => {console.log(res)})
+        .catch(error => {console.log(error)})
     }
     
     componentDidMount() {
@@ -79,7 +83,7 @@ class Search extends Component {
                                 <div key={res.ticker}>
                                     <h3>{res.name}</h3>
                                     <p>{res.ticker}</p>
-                                    <button onClick={() => this.addToWatchlist(res.symbol)}>Add to watchlist</button>
+                                    <button onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button>
                                 </div>
                             )
                         })}
