@@ -15,12 +15,14 @@
       <form method="POST">
         {% csrf_token %}
         <div class="form-group login-refactor">
+          <label for="id_username">Username:</label><br> 
           <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150"
             required="" id="id_username" placeholder="Username">
         </div>
         <div class="form-group login-refactor">
+          <label for="id_password1">Password:</label><br>
           <input type="password" name="password" autocomplete="current-password" required="" id="id_password"
-            placeholder="Password">
+            placeholder="********">
         </div>
         <div class="buttons">
           <button type="submit" class="btn btn-black login-btn">Login</button>
