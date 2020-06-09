@@ -8,7 +8,7 @@ class NavBar extends Component {
            <div>
                 <Link to='/d'>Homepage</Link>
                 <Link to='/d/graph'>Charts</Link>
-                <a href='/logout'>Logout</a>
+                <a href='/login'>Logout</a>
             </div> 
         );
     }
