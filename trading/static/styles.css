@@ -4,15 +4,39 @@ body {
 
 
 
+.style-info{
+    direction: rtl;
+}
+
+.style-input{
+    display: block;
+    direction: ltr;
+}
+
 .main-head{
     height: 150px;
     background: #FFF;
    
 }
+#wrapper {
+    width: 500px;
+    border: 1px solid black;
+    justify-content: right;
+}
+#first {
+    width: 300px;
+    border: 1px solid red;
+    float:right;
+}
+#second {
+    border: 1px solid green;
+    float:left
+}
+
 
 .sidenav {
     height: 100%;
-    background-color: #000;
+    background-color: #2C323A;
     overflow-x: hidden;
     padding-top: 20px;
 }
@@ -20,6 +44,32 @@ body {
 
 .main {
     padding: 0px 10px;
+}
+
+.login-refactor, #id_username, #id_password{
+    width:100%
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.signup-btn{
+    width: 50%;
+    margin-left: 5px;
+}
+
+.login-btn{
+    width: 50%;
+    margin-right: 5px;
+}
+
+main.home{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 @media screen and (max-height: 450px) {
@@ -42,17 +92,21 @@ body {
     }
 
     .sidenav{
-        width: 40%;
+        width: 30%;
         position: fixed;
-        z-index: 1;
+        z-index: -1;
         top: 0;
         left: 0;
     }
 
+    
     .login-form{
-        margin-top: 80%;
+        margin-top: 50%;
+        margin-bottom: 40%;
+       /*  margin-right: 0%; */
+        margin-left: 50%;
+        width:350px;
     }
-
     .register-form{
         margin-top: 20%;
     }
@@ -74,6 +128,6 @@ body {
     color: #fff;
 }
 
-#testworking{
-    color:blue
+.bg-black{
+    background-color: #2C323A;
 }
