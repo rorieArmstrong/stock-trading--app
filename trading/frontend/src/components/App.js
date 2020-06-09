@@ -1,22 +1,22 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Switch, BrowserRouter as Router} from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router, Link} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import Graph from './pages/Graph.js'
 import NavBar from './containers/NavBar'
 import Footer from './containers/Footer'
 import Search from './pages/Search'
+import Portfolio from './pages/Portfolio.js';
 
 class App extends Component {
     render() {
         return (
            <div>
-               <NavBar/>
-               <Graph/>
                <Router>
-                   <Switch>
-                       <Route path="/" exact component={Graph}/>
-                       <Route path='/graph' component={Graph}/>
-                       <Route path='/search' component={Search} />
+                    <NavBar/>
+                    <Switch>
+                       <Route path="/d" exact component={Portfolio}/>
+                       <Route path='/d/graph' component={Graph}/>
+                       <Route path='/d/search' component={Search} />
                    </Switch>
                </Router>
                <Footer/>
