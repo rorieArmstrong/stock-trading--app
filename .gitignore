@@ -1,4 +1,8 @@
 .vscode
 Pipfile.lock
 __pycache__
-__db.sqlite3__
+db.sqlite3
+node_modules
+package-lock.json
+.coverage
+htmlcov/

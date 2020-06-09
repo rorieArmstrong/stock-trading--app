@@ -1,6 +1,8 @@
 # stock-trading-app
 ## Instuctions
-
+1. run node server npm run dev
+2. run migrations python trading/manage.py migrate
+3. run the django server python trading/manage.py runserver
 
 ## Overview
 We were aiming to make a chart with different (user selected) stocks, showing the historical data and a sidebar of news related to their chosen stocks. - We found that tradingview have a widget that basically does the charting in one simple script, so we decided maybe to focus on creating a virtual stock portfolio where a user can:  
