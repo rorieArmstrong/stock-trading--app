@@ -9,6 +9,8 @@ verify_ssl = true
 django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
+coverage = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.8"
