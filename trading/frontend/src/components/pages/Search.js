@@ -8,7 +8,8 @@ class Search extends Component {
         this.state = {
             search: false,
             query: '',
-            results: []
+            results: [],
+            userID: null
         }
     };
 
@@ -24,14 +25,19 @@ class Search extends Component {
     };
 
     addToWatchlist = (symbol) => {
-        axios.post('/api/stocks',{
+        axios.post('/api/stocks/',{
             stock_symbol: symbol,
             stocks_bought_number: 0,
             bought_at_price: 0,
-            userID: 
+            userID: this.state.userID
         })
     }
     
+    componentDidMount() {
+        axios.get('/api/users')
+        .then(data => this.setState({userID: data.data[0].id}))
+    }
+
     render() {
         if (!this.state.search) {
             return (
