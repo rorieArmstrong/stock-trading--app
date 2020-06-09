@@ -5,8 +5,8 @@ class NavBar extends Component {
         return (
            <div>
                 <a href='/'>Homepage</a>
-                <a href='/d/graphs'>Charts</a>
-                <a href='/'>Logout</a>
+                <a href='/d/graph'>Charts</a>
+                <a href='/logout'>Logout</a>
             </div> 
         );
     }
