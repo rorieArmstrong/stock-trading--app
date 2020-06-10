@@ -38,4 +38,22 @@ Get Django authentication working and react implemented. No Blockers
 * Igor
    * API endpoints, testing.
    * Today: styling and frontend. No blockers.
+   
+### Wednesday 10/06
+* Huseyin:
+   * Finished styling Django templates.
+   * Today React styling/testing/building components. No blockers.
+   
+* Rorie:
+   * Worked on completing the search function and building the portfolio page. Getting userID from db.
+   * Fleshing out portfolio page for today. No blockers (yet)
+   
+* Keir
+   * Worked on the general functionality added a get for stock watchlist.
+   * React (styling, testing, etc). No blockers.
+   
+* Igor
+   * Styled django, same as Huseyin
+   * React in general. No blockers.
+
 
