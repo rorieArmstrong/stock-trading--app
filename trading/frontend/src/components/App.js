@@ -7,6 +7,7 @@ import Footer from './containers/Footer'
 import Search from './pages/Search'
 import Portfolio from './pages/Portfolio.js';
 import axios from 'axios';
+import css from "../public/reactStyles.css"
 
 class App extends Component {
     render() {
