@@ -8,7 +8,8 @@ class Portfolio extends Component {
         this.state = {
             userID: null,
             data: [],
-            balance: 0
+            balance: 0,
+            updating: false
         }
     }
     
@@ -23,15 +24,15 @@ class Portfolio extends Component {
 
     sell = () => {}
 
-    remove = (id, amount) => {
-        if (amount>0){
-            // sell all then delete
-        }else{
-            axios.delete('/api/stocks/'+id+'/')
-            .then()
-            .catch(err => {console.log(err)})
-        }
-    }
+    // remove = (id, amount) => {
+    //     if (amount>0){
+    //         // sell all then delete
+    //     }else{
+    //         axios.delete('/api/stocks/'+id+'/')
+    //         .then(this.setState({updating: false}))
+    //         .catch(err => {console.log(err)})
+    //     }
+    // }
 
     componentDidMount() {
         this.onLoad()
@@ -42,7 +43,7 @@ class Portfolio extends Component {
             <div>
                 <div>
                     <h3>Value: {}</h3>
-                    <h3>balance: {}</h3>
+                    <h3>balance: {this.state.balance}</h3>
                     <Link to='/d/search'><button>Add Stock to Watchlist</button></Link>
                 </div>
                 <div>
@@ -55,7 +56,7 @@ class Portfolio extends Component {
                                 <p>Current Price: </p>
                                 <button onClick={this.buy(stock.id)}>Buy</button>
                                 <button onClick={this.sell(stock.id)}>Sell</button>
-                                <button onClick={this.removeFromWatchlist(stock.id, stock.stocks_bought_number)}>Remove</button>
+                                {/* <button onClick={() => this.remove(stock.id, stock.stocks_bought_number)}>Remove</button> */}
                             </div>
                         )
                     })}
