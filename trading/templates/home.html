@@ -1,9 +1,22 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
-<a href="{% url 'login' %}"><button type="button">Login</button></a>
-
+<main class="home">
+    <article>
+        <div class="homeinfo">
+            <!-- <img width="250" src="{% static 'logo3.png' %}" alt=""><br /><br /> -->
+            <h3>Signup now to be able to:</h3>
+        </div>
+        <ul class="homelist">
+            <li>Test out your investment plans</li>
+            <li>Start with a £10,000 virtual balance</li>
+            <li>Buy / Sell Stocks</li>
+            <li>Create a virtual portfolio</li>
+            <li>Perform in-depth analysis on your portfolio</li>
+        </ul>
+    </article>
+    <img src="{% static 'homeimage.jpg' %}" alt="">
+</main>
 {% endblock %}

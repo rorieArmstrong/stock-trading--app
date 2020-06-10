@@ -14,12 +14,29 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href=" {% static 'styles.css' %}">
-    <title>{% block title %}Portfol.io{% endblock %}</title>
+    <title>{% block title %}Portfol.io - The world's leading trading and investment platform{% endblock %}</title>
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-black shadow-sm">
+        <div class="container">
+          <a href="/" class="navbar-brand">
+            <img src="{% static 'logo2.png' %}" width="150" alt="" class="d-inline-block align-middle mr-2">
+          </a>
+      
+          <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+      
+          <div id="navbarSupportedContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a href="/" class="nav-link">Home <span class="sr-only">(current)</span></a></li>
+              <li class="nav-item"><a href="https://github.com/rorieArmstrong/stock-trading-app" class="nav-link">About</a></li>
+              <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+              <li class="nav-item"><a href="/signup" class="nav-link">Signup</a></li>
+            </ul>
+          </div>
+        </div>
+    </nav>
     <main>
-
         {% block content %}
         {% endblock %}
     </main>
