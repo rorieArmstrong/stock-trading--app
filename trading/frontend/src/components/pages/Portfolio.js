@@ -6,20 +6,15 @@ class Portfolio extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            userID: null,
+            data: [],
+            balance: 0
         }
-    }
-
-    getUser = () => {
-        axios.get('/api/users')
-        .then(data => this.setState({userID: data.data[0].id}))
-        .catch(error => {console.log(error)})
-
     }
     
     onLoad = () => {
         axios.get('/api/users')
-        .then(data => { this.setState({userID: data.data[0].id}); return axios.get('/api/stocks/?user=' + data.data[0].id)})
+        .then(data => { this.setState({userID: data.data[0].id, balance: data.data[0].balance}); return axios.get('/api/stocks/?user=' + data.data[0].id)})
         .then(res => this.setState({data: res.data}))
         .catch(error => {console.log(error)})
     }
@@ -27,6 +22,16 @@ class Portfolio extends Component {
     buy = () => {}
 
     sell = () => {}
+
+    remove = (id, amount) => {
+        if (amount>0){
+            // sell all then delete
+        }else{
+            axios.delete('/api/stocks/'+id+'/')
+            .then()
+            .catch(err => {console.log(err)})
+        }
+    }
 
     componentDidMount() {
         this.onLoad()
@@ -48,8 +53,9 @@ class Portfolio extends Component {
                                 <p>Amout: {stock.stocks_bought_number}</p>
                                 <p>Bought at: {stock.bought_at_price}</p> 
                                 <p>Current Price: </p>
-                                <button onClick={this.buy(stock.id)}>buy</button>
+                                <button onClick={this.buy(stock.id)}>Buy</button>
                                 <button onClick={this.sell(stock.id)}>Sell</button>
+                                <button onClick={this.removeFromWatchlist(stock.id, stock.stocks_bought_number)}>Remove</button>
                             </div>
                         )
                     })}
