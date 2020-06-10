@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios'
+const stocks = require('stock-ticker-symbol');
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
 
 class Search extends Component {
     constructor(props) {
@@ -6,7 +10,8 @@ class Search extends Component {
         this.state = {
             search: false,
             query: '',
-            results: []
+            results: [],
+            userID: null
         }
     };
 
@@ -14,26 +19,38 @@ class Search extends Component {
         this.setState({query: e.target.value})
     }
 
-    getData = async (query) => {
+    getData = (query) => {
+        let results = stocks.search(query)
+        console.log(results)
         this.setState({search: true})
-        url = `http://autoc.finance.yahoo.com/autoc?query=${query}&region=EU&lang=en-GB`
-        let res = await (await fetch(url)).json();
-        this.setState({results: res.ResultSet.Result})
+        this.setState({results: results})
     };
 
-    addToWatchlist(symbol){
-
+    addToWatchlist = (symbol) => {
+        axios.post('/api/stocks/',{
+            "stock_symbol": symbol,
+            "stocks_bought_number": 0,
+            "bought_at_price": 0,
+            "userID": this.state.userID
+            }, {headers:{'Content-Type': 'application/json'}})
+        .then(res => {console.log(res)})
+        .catch(error => {console.log(error)})
     }
     
+    componentDidMount() {
+        axios.get('/api/users')
+        .then(data => this.setState({userID: data.data[0].id}))
+    }
+
     render() {
         if (!this.state.search) {
             return (
                 <div>
-                    <form onSubmit={this.getData()}>
+                    <form onSubmit={() => this.getData(this.state.query)}>
                         <label>Search: 
                         <input 
                                 type='text' 
-                                onChange={this.handleChange()} 
+                                onChange={this.handleChange} 
                                 value={this.state.query} 
                                 name='query' 
                                 placeholder='Search'/>
@@ -43,15 +60,15 @@ class Search extends Component {
                 </div>
             )
         }
-        else {
+        else if(this.state.results !== undefined){
             return (
                 <div>
                     <div>
-                        <form onSubmit={this.getData()}>
+                        <form onSubmit={() => this.getData(this.state.query)}>
                             <label>Search: 
                             <input 
                                     type='text' 
-                                    onChange={this.handleChange()} 
+                                    onChange={this.handleChange} 
                                     value={this.state.query} 
                                     name='query' 
                                     placeholder='Search'/>
@@ -61,15 +78,38 @@ class Search extends Component {
                     </div>
                     <div>
                         <h3>Results for {this.state.query}</h3>
-                        {results.map(res => {
+                        {this.state.results.map(res => {
                             return(
-                                <div>
+                                <div key={res.ticker}>
                                     <h3>{res.name}</h3>
-                                    <p>{res.symbol}</p>
-                                    <button onClick={this.addToWatchlist(res.symbol)}>Add to watchlist</button>
+                                    <p>{res.ticker}</p>
+                                    <button onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button>
                                 </div>
                             )
                         })}
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <div>
+                        <form onSubmit={() => this.getData(this.state.query)}>
+                            <label>Search: 
+                            <input 
+                                    type='text' 
+                                    onChange={this.handleChange} 
+                                    value={this.state.query} 
+                                    name='query' 
+                                    placeholder='Search'/>
+                            </label>
+                            <button type='submit'>Search</button>
+                        </form>
+                    </div>
+                    <div>
+                        <h3>
+                            There was an error in the search!
+                        </h3>
                     </div>
                 </div>
             )

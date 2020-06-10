@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import {Link, withRouter} from 'react-router-dom'
+
 class NavBar extends Component {
     
     render() {
         return (
            <div>
-                <a href='/'>Homepage</a>
-                <a href='/d/graph'>Charts</a>
-                <a href='/logout'>Logout</a>
+                <Link to='/d'>Homepage</Link>
+                <Link to='/d/graph'>Charts</Link>
+                <a href='/login'>Logout</a>
             </div> 
         );
     }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

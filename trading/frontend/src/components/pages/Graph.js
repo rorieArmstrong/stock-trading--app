@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import TradingViewWidget, {Themes} from 'react-tradingview-widget'
 
 class Graph extends Component {
+
+
     constructor(props) {
         super(props);
         this._ref = React.createRef();
