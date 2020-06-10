@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from 'axios'
 // let yahooStockPrices = require('yahoo-stock-prices');
 
@@ -7,46 +7,48 @@ class Portfolio extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
             userID: null,
             data: [],
             balance: 0,
-            updating: false
+            updating: false,
+            prices: {}
         }
     }
     
-    onLoad = () => {
-        axios.get('/api/users')
+    onLoad = async () => {
+        await axios.get('/api/users')
         .then(data => { this.setState({userID: data.data[0].id, balance: data.data[0].balance}); return axios.get('/api/stocks/?user=' + data.data[0].id)})
-        .then(res => this.setState({data: res.data}))
+        .then((res) => {
+            this.setState({data: res.data})
+            res.data.map((e) => {
+                console.log(e)
+                this.getPrice(e.stock_symbol)
+            })
+        })
+
         .catch(error => {console.log(error)})
     }
 
-    getPrice =(symbol) => {
-        // let price = null
-        // axios({
-        //     "method":"GET",
-        //     "url":"https://alpha-vantage.p.rapidapi.com/query",
-        //     "headers":{
-        //     "content-type":"application/octet-stream",
-        //     "x-rapidapi-host":"alpha-vantage.p.rapidapi.com",
-        //     "x-rapidapi-key":"1467346a6amsh9f2d2b808f465cfp1e71c3jsn1b9dff279cb0",
-        //     "useQueryString":true
-        //     },"params":{
-        //     "datatype":"json",
-        //     "function":"GLOBAL_QUOTE",
-        //     "symbol":symbol
-        //     }
-        //     })
-        //     .then((response)=>{
-        //         console.log(response.data['Global Quote']['05. price'])
-        //         return response.data['Global Quote']['05. price']
-        //     })
-        //     .catch((error)=>{
-        //       console.log(error)
-        //     })       
-        // return yahooStockPrices.getCurrentPrice(symbol, function(err, price){
-        //     return price
-        // });
+    getPrice = async (symbol) => {
+        console.log(symbol)
+        let price = null
+        await axios({
+            "method":"GET",
+            "url":`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=brgc7g7rh5r8gtveo3hg`,
+            "headers": {
+                "content-type":"text/json"
+            },
+        })
+        .then((response) => {
+            console.log(response.data.c)
+            this.setState({prices: {...this.state.prices, [symbol]: response.data.c}})
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+        console.log(price)
+        return price
     }
 
     buy = () => {
@@ -72,6 +74,10 @@ class Portfolio extends Component {
     }
 
     render() {
+        if(this.state.loading == true) {
+            return <div> Loading </div>
+        }
+        console.log(this.state.data)
         return (
             <div>
                 <div key='1'>
@@ -86,7 +92,7 @@ class Portfolio extends Component {
                                 <h3>{stock.stock_symbol}</h3>
                                 <p>Amout: {stock.stocks_bought_number}</p>
                                 <p>Bought at: {stock.bought_at_price}</p> 
-                                <p>Approximate Price: {this.getPrice(stock.stock_symbol)}</p>
+                                <p>Approximate Price: {this.state.prices[stock.stock_symbol]}</p>
                                 <button onClick={this.buy(stock.id)}>Buy</button>
                                 <button onClick={this.sell(stock.id)}>Sell</button>
                                 <button onClick={() => this.remove(stock.id, stock.stocks_bought_number)}>Remove</button>
