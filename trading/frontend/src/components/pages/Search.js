@@ -19,8 +19,9 @@ class Search extends Component {
         this.setState({query: e.target.value})
     }
 
-    getData = (query) => {
-        let results = stocks.search(query)
+    getData = () => {
+        event.preventDefault()
+        let results = stocks.search(this.state.query)
         console.log(results)
         this.setState({search: true})
         this.setState({results: results})
@@ -65,7 +66,7 @@ class Search extends Component {
             return (
                 <div>
                     <div>
-                        <form onSubmit={() => this.getData(this.state.query)}>
+                        <form onSubmit={this.getData}>
                             <label>Search: 
                             <input 
                                     type='text' 

@@ -48,7 +48,7 @@ class Portfolio extends Component {
 
     buy = async (id, symbol, currnet) => {
         // buy an amount of stocks and update the balance and amount in database
-        let price; // await
+        let price = await this.getPrice(symbol)
         let amount = await prompt("How many stocks would you like to buy at " + price, 1);
         if (amount*price<=this.state.balance){
             axios.patch('api/users/'+this.state.userID+'/',{
@@ -114,8 +114,8 @@ class Portfolio extends Component {
                                 <p>Amout: {stock.stocks_bought_number}</p>
                                 <p>Bought at: {stock.bought_at_price}</p> 
                                 <p>Approximate Price: {this.getPrice(stock.stock_symbol)}</p>
-                                <button onClick={this.buy(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Buy</button>
-                                <button onClick={this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button>
+                                <button onClick={() => this.buy(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Buy</button>
+                                <button onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button>
                                 <button onClick={() => this.remove(stock.id, stock.stocks_bought_number)}>Remove</button>
                             </div>
                         )
