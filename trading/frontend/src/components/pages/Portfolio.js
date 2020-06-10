@@ -50,19 +50,23 @@ class Portfolio extends Component {
         return price
     }
 
-    buy = async (id, symbol, currnet) => {
+    buy = async (id, symbol, current) => {
         // buy an amount of stocks and update the balance and amount in database
-        let price = await this.getPrice(symbol)
+        let price = this.state.prices[symbol]
         let amount = await prompt("How many stocks would you like to buy at " + price, 1);
-        if (amount*price<=this.state.balance){
-            axios.patch('api/users/'+this.state.userID+'/',{
-                balance: this.state.balance - amount*price
+        let cost = (amount*price)
+        console.log(id, symbol, current, amount, this.state.userID, cost)
+        if (cost <= this.state.balance){
+            axios.patch('api/users/3/',{
+                "balance": 10000
             }, {headers:{'Content-Type': 'application/json'}})
+            .then(res => {console.log(res)})
+            .catch(error => {console.log(error)})
             if (current === 0){
                 axios.put('/api/stocks/'+id+'/',{
                     "stock_symbol": symbol,
                     "stocks_bought_number": amount,
-                    "bought_at_price": price,
+                    "bought_at_price": parseInt(price),
                     "userID": this.state.userID
                     }, {headers:{'Content-Type': 'application/json'}})
                 .then(res => {console.log(res)})
@@ -72,12 +76,12 @@ class Portfolio extends Component {
                 axios.post('/api/stocks/',{
                     "stock_symbol": symbol,
                     "stocks_bought_number": amount,
-                    "bought_at_price": price,
+                    "bought_at_price": parseInt(price),
                     "userID": this.state.userID
                     }, {headers:{'Content-Type': 'application/json'}})
                 .then(res => {console.log(res)})
                 .catch(error => {console.log(error)})
-                window.alert('Stocks have been purchased')
+                // window.alert('Stocks have been purchased')
             }
         }else{
             window.alert('You do not have enough funds in your account!')
@@ -117,7 +121,7 @@ class Portfolio extends Component {
                 <div key='2'>
                     {this.state.data.map(stock => {
                         return(
-                            <div key={stock.stock_symbol}>
+                            <div>
                                 <h3>{stock.stock_symbol}</h3>
                                 <p>Amout: {stock.stocks_bought_number}</p>
                                 <p>Bought at: {stock.bought_at_price}</p> 
