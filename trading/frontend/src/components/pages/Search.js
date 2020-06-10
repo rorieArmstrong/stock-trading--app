@@ -35,6 +35,7 @@ class Search extends Component {
             }, {headers:{'Content-Type': 'application/json'}})
         .then(res => {console.log(res)})
         .catch(error => {console.log(error)})
+        window.alert('Stock added to your watchlist')
     }
     
     componentDidMount() {
