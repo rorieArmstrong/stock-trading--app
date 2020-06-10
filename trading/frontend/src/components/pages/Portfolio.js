@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link} from "react-router-dom";
 import axios from 'axios'
-// let yahooStockPrices = require('yahoo-stock-prices');
 
 class Portfolio extends Component {
     constructor(props) {
@@ -44,16 +43,44 @@ class Portfolio extends Component {
         //     .catch((error)=>{
         //       console.log(error)
         //     })       
-        // return yahooStockPrices.getCurrentPrice(symbol, function(err, price){
-        //     return price
-        // });
+        return 'x'
     }
 
-    buy = () => {
+    buy = async (id, symbol, currnet) => {
         // buy an amount of stocks and update the balance and amount in database
+        let price; // await
+        let amount = await prompt("How many stocks would you like to buy at " + price, 1);
+        if (amount*price<=this.state.balance){
+            axios.patch('api/users/'+this.state.userID+'/',{
+                balance: this.state.balance - amount*price
+            }, {headers:{'Content-Type': 'application/json'}})
+            if (current === 0){
+                axios.put('/api/stocks/'+id+'/',{
+                    "stock_symbol": symbol,
+                    "stocks_bought_number": amount,
+                    "bought_at_price": price,
+                    "userID": this.state.userID
+                    }, {headers:{'Content-Type': 'application/json'}})
+                .then(res => {console.log(res)})
+                .catch(error => {console.log(error)})
+                window.alert('Stocks have been purchased')
+            }else{
+                axios.post('/api/stocks/',{
+                    "stock_symbol": symbol,
+                    "stocks_bought_number": amount,
+                    "bought_at_price": price,
+                    "userID": this.state.userID
+                    }, {headers:{'Content-Type': 'application/json'}})
+                .then(res => {console.log(res)})
+                .catch(error => {console.log(error)})
+                window.alert('Stocks have been purchased')
+            }
+        }else{
+            window.alert('You do not have enough funds in your account!')
+        }
     }
 
-    sell = () => {
+    sell = async (id, symbol, currnet) => {
         // sell an amount of stocks and update the balance and amount in database
     }
 
@@ -87,8 +114,8 @@ class Portfolio extends Component {
                                 <p>Amout: {stock.stocks_bought_number}</p>
                                 <p>Bought at: {stock.bought_at_price}</p> 
                                 <p>Approximate Price: {this.getPrice(stock.stock_symbol)}</p>
-                                <button onClick={this.buy(stock.id)}>Buy</button>
-                                <button onClick={this.sell(stock.id)}>Sell</button>
+                                <button onClick={this.buy(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Buy</button>
+                                <button onClick={this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button>
                                 <button onClick={() => this.remove(stock.id, stock.stocks_bought_number)}>Remove</button>
                             </div>
                         )
