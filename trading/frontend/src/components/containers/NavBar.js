@@ -17,7 +17,9 @@ const Navigation = () => {
                 <ul className="navbar-nav ml-auto">
                 <li className="nav-item"><a href="/" className="nav-link">Home <span className="sr-only">(current)</span></a></li>
                 <li className="nav-item"><a href="https://github.com/rorieArmstrong/stock-trading-app" className="nav-link">About</a></li>
-                <li className="nav-item"><a href="/d" className="nav-link">Dashboard</a></li>
+                <li className="nav-item"><a href="/d" className="nav-link">Portfolio</a></li>
+                <li className="nav-item"><a href="/d/search" className="nav-link">Search</a></li>
+                <li className="nav-item"><a href="/d/graph" className="nav-link">Analysis</a></li>
                 <li className="nav-item"><a href="/logout" className="nav-link">Logout</a></li>
                 </ul>
             </div>

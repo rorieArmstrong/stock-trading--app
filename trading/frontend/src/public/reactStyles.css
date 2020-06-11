@@ -1,3 +1,140 @@
+.add-stock {
+    margin-bottom: 5px;
+}
+
 .bg-black{
     background-color: #2C323A;
+}
+
+.navbar{
+    margin-bottom: 25px;
+}
+
+.tradingWidget{
+    margin-bottom:25px
+}
+
+#searchBox{
+    margin-right:5px
+}
+
+.searchForm{
+    display:flex;
+    justify-content: center;
+    margin-bottom:10px;
+}
+
+.searchResults{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100
+}
+
+.searchTable{
+    margin-top:10px;
+    width:60%
+}
+
+
+.tableCompany{
+    text-align: center;
+}
+
+.tableSymbol{
+    text-align: center;
+}
+
+.tableButton{
+    text-align: right;
+}
+
+.stock-table {
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.table-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 1rem;
+    padding: 1rem;
+    height: min-content;
+}
+
+.watchlist {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.watchlist-orders-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.stock-orders {
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.stock-orders table {
+    background-color: rgba(128, 128, 128, 0.25);
+}
+
+.stock-orders td {
+    padding: 0.5rem;
+
+}
+
+.stock-orders th {
+    padding: 0.5rem
+}
+
+.single-stock {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    background-color: rgba(128, 128, 128, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stock-name {
+    width: 100%;
+}
+
+.single-stock p {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    text-align: center;
+}
+
+
+thead {
+    background-color: #2C323A;
+    color: white;
+    width: max-content
+}
+
+tbody tr {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+.watchlist .stock-name {
+    background-color: #2C323A;
+    color: white;
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.watchlist h2 {
+    text-align: center;
+}
+
+.table-top * {
+    padding: 0.25rem;
 }

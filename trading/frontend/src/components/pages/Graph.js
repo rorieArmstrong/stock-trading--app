@@ -32,12 +32,14 @@ class Graph extends Component {
 
     render() {
         return (
+            <div class="tradingWidget">
             <TradingViewWidget
                 symbol="NASDAQ:AAPL"
-                theme={Themes.LIGHT}
+                theme={Themes.DARK}
                 locale="uk"
                 watchlist= {this.state.watchlist}
             />
+            </div>
         )
     }
 }
