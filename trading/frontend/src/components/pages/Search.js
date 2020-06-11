@@ -58,7 +58,7 @@ class Search extends Component {
                                 value={this.state.query} 
                                 name='query' 
                                 placeholder='Search'/>
-                        <button type='submit'>Search</button>
+                        <button className="btn btn-dark" type='submit'>Search</button>
                     </form>
                 </div>
             )
@@ -69,13 +69,14 @@ class Search extends Component {
                     <div>
                         <form className="searchForm" onSubmit={() => this.getData()}>
                             <input 
+                                    id="searchBox"
                                     type='text' 
                                     onChange={this.handleChange} 
                                     value={this.state.query} 
                                     name='query' 
                                     placeholder='Search'/>
 
-                            <button type='submit'>Search</button>
+                            <button className="btn btn-dark" type='submit'>Search</button>
                         </form>
                     </div>
                     <div className="searchResults">
@@ -94,7 +95,7 @@ class Search extends Component {
                                 <tr key={res.ticker}>
                                     <td className="tableCompany">{res.name}</td>
                                     <td className="tableSymbol">{res.ticker}</td>
-                                    <td className="tableButton btn btn-black"><button id="addButton" onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button></td>
+                                    <td className="tableButton"><button className="btn btn-dark" id="addButton" onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button></td>
                                 </tr>
                             )
                         })}
