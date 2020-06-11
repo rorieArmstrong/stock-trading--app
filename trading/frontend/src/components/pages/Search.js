@@ -21,7 +21,7 @@ class Search extends Component {
     }
 
     getData = () => {
-        event.preventDefault()
+        // event.preventDefault()
         this.setState({searched: this.state.query})
         let results = stocks.search(this.state.query)
         console.log(results)
