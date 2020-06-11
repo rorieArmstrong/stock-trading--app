@@ -17,14 +17,14 @@ class Portfolio extends Component {
     
     onLoad = async () => {
         await axios.get('/api/users')
-        .then(data => { this.setState({userID: data.data[0].id, balance: data.data[0].balance}); return axios.get('/api/stocks/?user=' + data.data[0].id)})
+        .then(data => { this.setState({userID: data.data[0].id, balance: data.data[0].balance, value: data.data[0].balance}); return axios.get('/api/stocks/?user=' + data.data[0].id)})
         .then((res) => {
             this.setState({data: res.data})
             res.data.map((e) => {
                 this.getPrice(e.stock_symbol)
+                console.log(this.getPrice(e.stock_symbol))
             })
         })
-
         .catch(error => {console.log(error)})
     }
 
@@ -137,8 +137,17 @@ class Portfolio extends Component {
         .catch(err => {console.log(err)})
     }
 
+    sum = (data) => {
+        let value = this.state.balance;
+        data.map(stock => {
+            value += stock.stocks_bought_number * this.state.prices[stock.stock_symbol]
+        })
+        return value
+    }
+
     componentDidMount() {
         this.onLoad()
+        console.log(this.state.prices)
     }
 
     watchlist(){
@@ -164,8 +173,8 @@ class Portfolio extends Component {
             <React.Fragment>
             <div>
                 <div key='1'>
-                    <h3>Value: {}</h3>
-                    <h3>balance: {this.state.balance}</h3>
+                    <h3>Value: {this.sum(this.state.data)}</h3>
+                    <h3>Balance: {this.state.balance}</h3>
                     <Link to='/d/search'><button>Add Stock to Watchlist</button></Link>
                 </div>
                 <div>
