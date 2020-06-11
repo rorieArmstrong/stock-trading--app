@@ -21,7 +21,6 @@ class Portfolio extends Component {
         .then((res) => {
             this.setState({data: res.data})
             res.data.map((e) => {
-                console.log(e)
                 this.getPrice(e.stock_symbol)
             })
         })
@@ -30,7 +29,6 @@ class Portfolio extends Component {
     }
 
     getPrice = async (symbol) => {
-        console.log(symbol)
         let price = null
         await axios({
             "method":"GET",
@@ -46,7 +44,6 @@ class Portfolio extends Component {
         .catch((error) => {
             console.log(error)
         })
-        console.log(price)
         return price
     }
 
@@ -57,21 +54,34 @@ class Portfolio extends Component {
         let cost = (amount*price)
         console.log(id, symbol, current, amount, this.state.userID, cost)
         if (cost <= this.state.balance){
-            axios.patch(`/api/users/${this.state.userID}/`,{
-                "balance": 30
+            axios.patch('/api/users/'+this.state.userID+'/',{
+                "balance": parseInt(this.state.balance - cost)
             }, {headers:{'Content-Type': 'application/json'}})
             .then(res => {console.log(res)})
             .catch(error => {console.log(error)})
-            
-            axios.post('/api/stocks/',{
-                "stock_symbol": symbol,
-                "stocks_bought_number": amount,
-                "bought_at_price": parseInt(price),
-                "userID": this.state.userID
-                }, {headers:{'Content-Type': 'application/json'}})
-            .then(res => {console.log(res)})
-            .catch(error => {console.log(error)})
-                // window.alert('Stocks have been purchased')
+            if (current === 0){
+                axios.put('/api/stocks/'+id+'/',{
+                    "stock_symbol": symbol,
+                    "stocks_bought_number": amount,
+                    "bought_at_price": parseInt(price),
+                    "userID": this.state.userID
+                    }, {headers:{'Content-Type': 'application/json'}})
+                .then(res => {console.log(res)})
+                .then(() => {window.location.reload(true)})
+                .catch(error => {console.log(error)})
+                window.alert('Stocks have been purchased')
+            }else{
+                axios.post('/api/stocks/',{
+                    "stock_symbol": symbol,
+                    "stocks_bought_number": amount,
+                    "bought_at_price": parseInt(price),
+                    "userID": this.state.userID
+                    }, {headers:{'Content-Type': 'application/json'}})
+                .then(res => {console.log(res)})
+                .then(() => {window.location.reload(true)})
+                .catch(error => {console.log(error)})
+                window.alert('Stocks have been purchased')
+            }
         }else{
             window.alert('You do not have enough funds in your account!')
         }
@@ -79,16 +89,52 @@ class Portfolio extends Component {
 
     sell = async (id, symbol, current) => {
         // sell an amount of stocks and update the balance and amount in database
+        let price = this.state.prices[symbol]
+        let amount = await prompt("How many stocks would you like to sell at " + price, 1);
+        let gain = (amount*price)
+        console.log(id, symbol, current, amount, this.state.userID, gain)
+        // patch
+        if (amount <= current){
+            axios.patch('/api/users/'+this.state.userID+'/',{
+                "balance": parseInt(this.state.balance + gain)
+            }, {headers:{'Content-Type': 'application/json'}})
+            .then(res => {console.log(res)})
+            .catch(error => {console.log(error)})
+            if ((current - amount) === 0){
+                axios.delete('/api/stocks/'+id+'/')
+                .then(res => {console.log(res)})
+                .then(() => {window.location.reload(true)})
+                .catch(error => {console.log(error)})
+                window.alert('Stocks have been sold')
+            }else{
+                axios.patch('/api/stocks/'+id+'/',{
+                    "stocks_bought_number": (current-amount)
+                    }, {headers:{'Content-Type': 'application/json'}})
+                .then(res => {console.log(res)})
+                .then(() => {window.location.reload(true)})
+                .catch(error => {console.log(error)})
+                window.alert('Stocks have been sold')
+            }
+        }else{
+            window.alert('You do not have enough stocks in this trade!')
+        }
     }
 
-    remove = (id, amount) => {
+    remove = (id, symbol, amount) => {
         if (amount>0){
-            // sell all then delete e.g sell(amount) then axios.delete
-        }else{
-            axios.delete('/api/stocks/' + id + '/')
-            .then(this.setState({updating: false}))
-            .catch(err => {console.log(err)})
+            let price = this.state.prices[symbol]
+            let gain = (amount*price)
+            axios.patch('/api/users/'+this.state.userID+'/',{
+                "balance": parseInt(this.state.balance + gain)
+            }, {headers:{'Content-Type': 'application/json'}})
+            .then(res => {console.log(res)})
+            .catch(error => {console.log(error)})
         }
+        axios.delete('/api/stocks/' + id + '/')
+        .then(res => {console.log(res)})
+        .then(this.setState({updating: false}))
+        .then(() => {window.location.reload(true)})
+        .catch(err => {console.log(err)})
     }
 
     componentDidMount() {
@@ -114,7 +160,6 @@ class Portfolio extends Component {
         if(this.state.loading == true) {
             return <div> Loading </div>
         }
-        console.log(this.state.data)
         return (
             <React.Fragment>
             <div>
@@ -151,11 +196,10 @@ class Portfolio extends Component {
                                 <td>{stock.bought_at_price}</td>
                                 <td>{stock.bought_at_time}</td>
                                 <td><button onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button></td>
-                                <td><button onClick={() => this.remove(stock.id, stock.stocks_bought_number)}>Close</button></td>
+                                <td><button onClick={() => this.remove(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Close</button></td>
                             </tr>
                             )
-                        }
-                        
+                        }   
                     )}
                     </tbody>
                     </table>
@@ -165,5 +209,6 @@ class Portfolio extends Component {
         );
     }
 }
+//<img src={require(Logo)} />
 
 export default Portfolio;
