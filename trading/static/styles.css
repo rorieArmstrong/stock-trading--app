@@ -80,11 +80,16 @@ main.home{
     width:100%;
 }
 
+.btn-dark{
+    background-color: #2C323A;
+}
+
 .formContainer{
     display: flex;
     flex-direction: column;
 
 }
+
 
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
@@ -110,7 +115,7 @@ main.home{
     }
 
     .sidenav{
-        width: 35%;
+        width: 40%;
         position: fixed;
         z-index: -1;
         top: 0;

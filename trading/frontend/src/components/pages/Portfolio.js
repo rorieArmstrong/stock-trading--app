@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios'
+import { Button } from 'react-bootstrap'
 
 class Portfolio extends Component {
     constructor(props) {
@@ -147,13 +148,29 @@ class Portfolio extends Component {
         unique.map(stock => {
             return(
                 <React.Fragment>
-                <h3>{stock}</h3>
+                <div className="single-stock">
+                <p className="stock-name">{stock}</p>
                 <p>Current Price: £{this.state.prices[stock]}</p>
-                <button onClick={() => this.buy(stock.id, stock, stock.stocks_bought_number)}>Buy</button>
+                <button  className = "btn btn-dark" onClick={() => this.buy(stock.id, stock, stock.stocks_bought_number)}>Buy</button>
+                </div>
                 </React.Fragment>
             )
         })
         )
+    }
+
+    timeConvert(timeOfPurchase){
+        const isoFormat = new Date(timeOfPurchase)
+        const newFormat = new Intl.DateTimeFormat("en-GB", {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        }).format(isoFormat);
+        console.log(isoFormat)
+        return newFormat
     }
 
     render() {
@@ -162,26 +179,30 @@ class Portfolio extends Component {
         }
         return (
             <React.Fragment>
-            <div>
-                <div key='1'>
-                    <h3>Value: {}</h3>
-                    <h3>balance: {this.state.balance}</h3>
-                    <Link to='/d/search'><button>Add Stock to Watchlist</button></Link>
+            <div className="stock-table">
+                <div className = "table-top" key='1'>
+                    <h2>Value: {}</h2>
+                    <h2>Balance: {this.state.balance}</h2>
                 </div>
-                <div>
+                <div className="watchlist-orders-container">
+                <div className="watchlist">
+                    <h2>Watchlist</h2>
+                    <Link to='/d/search'><button className=" add-stock btn btn-dark">Add Stock to Watchlist</button></Link>
                     {this.watchlist()}
                 </div>
-                <div key='2'>
+                <div className="stock-orders" key='2'>
                     <h2>Orders</h2>
                     <table>
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Symbol</th>
-                                <th>Amount</th>
-                                <th>Price</th>
-                                <th>Price of purchase</th>
-                                <th>Time of purchase</th>
+                                <th>No. of Shares</th>
+                                <th>Current Price</th>
+                                <th>Price of Purchase</th>
+                                <th>Time of Purchase</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -192,17 +213,18 @@ class Portfolio extends Component {
                                 <td>{stock.id}</td>
                                 <td>{stock.stock_symbol}</td>
                                 <td>{stock.stocks_bought_number}</td>
-                                <td>{this.state.prices[stock.stock_symbol]}</td>
-                                <td>{stock.bought_at_price}</td>
-                                <td>{stock.bought_at_time}</td>
-                                <td><button onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button></td>
-                                <td><button onClick={() => this.remove(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Close</button></td>
+                                <td>£{this.state.prices[stock.stock_symbol]}</td>
+                                <td>£{stock.bought_at_price}</td>
+                                <td>{this.timeConvert(stock.bought_at_time)}</td>
+                                <td><button className="btn btn-dark" onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button></td>
+                                <td><button className="btn btn-danger" onClick={() => this.remove(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Close</button></td>
                             </tr>
                             )
                         }   
                     )}
                     </tbody>
                     </table>
+                </div>
                 </div>
             </div>
             </React.Fragment>
