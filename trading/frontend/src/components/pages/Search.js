@@ -83,7 +83,7 @@ class Search extends Component {
                                 <div key={res.ticker}>
                                     <h3>{res.name}</h3>
                                     <p>{res.ticker}</p>
-                                    <button onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button>
+                                    <button id="addButton" onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button>
                                 </div>
                             )
                         })}

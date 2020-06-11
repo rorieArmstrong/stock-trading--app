@@ -35,5 +35,6 @@ class Portfolio extends Component {
         );
     }
 }
+//<img src={require(Logo)} />
 
 export default Portfolio;
