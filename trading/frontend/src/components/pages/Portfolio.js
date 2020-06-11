@@ -17,12 +17,11 @@ class Portfolio extends Component {
     
     onLoad = async () => {
         await axios.get('/api/users')
-        .then(data => { this.setState({userID: data.data[0].id, balance: data.data[0].balance, value: data.data[0].balance}); return axios.get('/api/stocks/?user=' + data.data[0].id)})
+        .then(data => { this.setState({userID: data.data[0].id, balance: Number(data.data[0].balance), value: Number(data.data[0].balance)}); return axios.get('/api/stocks/?user=' + data.data[0].id)})
         .then((res) => {
             this.setState({data: res.data})
             res.data.map((e) => {
                 this.getPrice(e.stock_symbol)
-                console.log(this.getPrice(e.stock_symbol))
             })
         })
         .catch(error => {console.log(error)})
@@ -38,7 +37,6 @@ class Portfolio extends Component {
             },
         })
         .then((response) => {
-            console.log(response.data.c)
             this.setState({prices: {...this.state.prices, [symbol]: response.data.c}})
         })
         .catch((error) => {
@@ -51,34 +49,35 @@ class Portfolio extends Component {
         // buy an amount of stocks and update the balance and amount in database
         let price = this.state.prices[symbol]
         let amount = await prompt("How many stocks would you like to buy at " + price, 1);
-        let cost = (amount*price)
+        let cost = (Number(amount)*price)
         console.log(id, symbol, current, amount, this.state.userID, cost)
         if (cost <= this.state.balance){
+            console.log(this.state.balance - cost)
             axios.patch('/api/users/'+this.state.userID+'/',{
-                "balance": parseInt(this.state.balance - cost)
+                "balance": parseFloat(this.state.balance - cost).toFixed(2)
             }, {headers:{'Content-Type': 'application/json'}})
             .then(res => {console.log(res)})
             .catch(error => {console.log(error)})
-            if (current === 0){
+            if (current === 0 && amount != null){
                 axios.put('/api/stocks/'+id+'/',{
                     "stock_symbol": symbol,
                     "stocks_bought_number": amount,
-                    "bought_at_price": parseInt(price),
+                    "bought_at_price": price,
                     "userID": this.state.userID
                     }, {headers:{'Content-Type': 'application/json'}})
                 .then(res => {console.log(res)})
                 .then(() => {window.location.reload(true)})
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been purchased')
-            }else{
+            }else if(amount != null){
                 axios.post('/api/stocks/',{
                     "stock_symbol": symbol,
                     "stocks_bought_number": amount,
-                    "bought_at_price": parseInt(price),
+                    "bought_at_price": price,
                     "userID": this.state.userID
                     }, {headers:{'Content-Type': 'application/json'}})
                 .then(res => {console.log(res)})
-                .then(() => {window.location.reload(true)})
+              .then(() => {window.location.reload(true)})
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been purchased')
             }
@@ -91,12 +90,14 @@ class Portfolio extends Component {
         // sell an amount of stocks and update the balance and amount in database
         let price = this.state.prices[symbol]
         let amount = await prompt("How many stocks would you like to sell at " + price, 1);
-        let gain = (amount*price)
+        console.log(amount)
+        let gain = Number(amount*price)
         console.log(id, symbol, current, amount, this.state.userID, gain)
         // patch
         if (amount <= current){
+            console.log((this.state.balance + gain), this.state.userID)
             axios.patch('/api/users/'+this.state.userID+'/',{
-                "balance": parseInt(this.state.balance + gain)
+                "balance": parseFloat(this.state.balance + gain).toFixed(2)
             }, {headers:{'Content-Type': 'application/json'}})
             .then(res => {console.log(res)})
             .catch(error => {console.log(error)})
@@ -106,7 +107,7 @@ class Portfolio extends Component {
                 .then(() => {window.location.reload(true)})
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been sold')
-            }else{
+            }else if(amount != null){
                 axios.patch('/api/stocks/'+id+'/',{
                     "stocks_bought_number": (current-amount)
                     }, {headers:{'Content-Type': 'application/json'}})
@@ -123,9 +124,9 @@ class Portfolio extends Component {
     remove = (id, symbol, amount) => {
         if (amount>0){
             let price = this.state.prices[symbol]
-            let gain = (amount*price)
+            let gain = Number(amount*price)
             axios.patch('/api/users/'+this.state.userID+'/',{
-                "balance": parseInt(this.state.balance + gain)
+                "balance": parseFloat(this.state.balance + gain).toFixed(2)
             }, {headers:{'Content-Type': 'application/json'}})
             .then(res => {console.log(res)})
             .catch(error => {console.log(error)})
@@ -138,9 +139,9 @@ class Portfolio extends Component {
     }
 
     sum = (data) => {
-        let value = this.state.balance;
+        let value = Number(this.state.balance);
         data.map(stock => {
-            value += stock.stocks_bought_number * this.state.prices[stock.stock_symbol]
+            value += Number(stock.stocks_bought_number * this.state.prices[stock.stock_symbol])
         })
         return value
     }
@@ -177,7 +178,7 @@ class Portfolio extends Component {
                     <h3>Balance: {this.state.balance}</h3>
                     <Link to='/d/search'><button>Add Stock to Watchlist</button></Link>
                 </div>
-                <div>
+                <div key='3'>
                     {this.watchlist()}
                 </div>
                 <div key='2'>
@@ -188,7 +189,7 @@ class Portfolio extends Component {
                                 <th>ID</th>
                                 <th>Symbol</th>
                                 <th>Amount</th>
-                                <th>Price</th>
+                                <th>Current Price</th>
                                 <th>Price of purchase</th>
                                 <th>Time of purchase</th>
                             </tr>

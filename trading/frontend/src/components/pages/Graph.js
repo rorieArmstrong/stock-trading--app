@@ -25,7 +25,6 @@ class Graph extends Component {
                 arr.push(stock.stock_symbol)
             })
             arr = arr.filter((x, i, a) => a.indexOf(x) === i)
-            console.log(arr)
             this.setState({watchlist: arr})})
         .catch(error => {console.log(error)})
     }
