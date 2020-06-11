@@ -1,8 +1,19 @@
 # stock-trading-app
 ## Instuctions
-1. run node server npm run dev
-2. run migrations python trading/manage.py migrate
-3. run the django server python trading/manage.py runserver
+* You will need 2 terminal sessions, make sure you're in the project folder
+
+* To install all required packages:
+1. Run ``` pipenv install  ``` in terminal 1
+2. Run ``` npm install ``` in terminal 2
+
+* To create the database
+3. Activate virtual environment by running ``` pipenv shell ``` in terminal 1
+4. Go into project folder by doing ``` cd trading ``` then ```python manage.py migrate``` in terminal 1
+
+* Running the servers
+5. Run ``` python manage.py runserver``` in terminal 1 to run the backend django server
+6. Run ``` npm run dev``` in terminal 2 to tun the react server
+7. Finished. You should now be able to access the site from [http://http://127.0.0.1:8000/]
 
 ## Overview
 We were aiming to make a chart with different (user selected) stocks, showing the historical data and a sidebar of news related to their chosen stocks. - We found that tradingview have a widget that basically does the charting in one simple script, so we decided maybe to focus on creating a virtual stock portfolio where a user can:  
