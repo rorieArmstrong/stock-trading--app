@@ -56,4 +56,19 @@ Get Django authentication working and react implemented. No Blockers
    * Styled django, same as Huseyin
    * React in general. No blockers.
 
+### Thursday 11/06
+* Huseyin
+   * Testing for two components in the React frontend and styled the Navbar in the react side to be consistent with the django login flow. 
+   * Today, finish styling and testing components that Rorie and Keir are finishing. No blockers.
+   
+* Rorie
+   * Built portfolio page and completed functionality for that.
+   * Testing components. Could add a footer. No blockers.
+   
+* Keir
+   * Built portfolio page and completed functionality. 
+   * Testing components. No blockers. Start on the presentation.
 
+* Igor
+   * Testing, styling etc.
+   * Testing, styling etc. No blockers.
