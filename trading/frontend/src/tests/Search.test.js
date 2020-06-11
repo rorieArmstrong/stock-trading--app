@@ -12,8 +12,13 @@ jest.mock('axios', () => ({
         if (url == '/api/users'){
             return Promise.resolve({data: [{id: 1}]})
         }
-    }
-    ,
+    },
+
+    post: (url) => {
+        if (url == '/api/stocks/'){
+            return Promise.resolve({data: [{id: 1}]})
+        }
+    },
     
     defaults: { 
         withCredentials: true,

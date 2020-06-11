@@ -65,9 +65,9 @@ describe('Portfolio', () => {
 
     it('calcuates the value of the portfolio', async () => {
         
-        // state={
-        //     balance:10000
-        // }
+        
+
+
 
 
     })
