@@ -67,6 +67,7 @@ class Portfolio extends Component {
                     "userID": this.state.userID
                     }, {headers:{'Content-Type': 'application/json'}})
                 .then(res => {console.log(res)})
+                .then(() => {window.location.reload(true)})
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been purchased')
             }else{
@@ -77,8 +78,9 @@ class Portfolio extends Component {
                     "userID": this.state.userID
                     }, {headers:{'Content-Type': 'application/json'}})
                 .then(res => {console.log(res)})
+                .then(() => {window.location.reload(true)})
                 .catch(error => {console.log(error)})
-                // window.alert('Stocks have been purchased')
+                window.alert('Stocks have been purchased')
             }
         }else{
             window.alert('You do not have enough funds in your account!')
@@ -101,6 +103,7 @@ class Portfolio extends Component {
             if ((current - amount) === 0){
                 axios.delete('/api/stocks/'+id+'/')
                 .then(res => {console.log(res)})
+                .then(() => {window.location.reload(true)})
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been sold')
             }else{
@@ -108,6 +111,7 @@ class Portfolio extends Component {
                     "stocks_bought_number": (current-amount)
                     }, {headers:{'Content-Type': 'application/json'}})
                 .then(res => {console.log(res)})
+                .then(() => {window.location.reload(true)})
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been sold')
             }
@@ -116,14 +120,21 @@ class Portfolio extends Component {
         }
     }
 
-    remove = (id, amount) => {
+    remove = (id, symbol, amount) => {
         if (amount>0){
-            // sell all then delete
-        }else{
-            axios.delete('/api/stocks/' + id + '/')
-            .then(this.setState({updating: false}))
-            .catch(err => {console.log(err)})
+            let price = this.state.prices[symbol]
+            let gain = (amount*price)
+            axios.patch('/api/users/'+this.state.userID+'/',{
+                "balance": parseInt(this.state.balance + gain)
+            }, {headers:{'Content-Type': 'application/json'}})
+            .then(res => {console.log(res)})
+            .catch(error => {console.log(error)})
         }
+        axios.delete('/api/stocks/' + id + '/')
+        .then(res => {console.log(res)})
+        .then(this.setState({updating: false}))
+        .then(() => {window.location.reload(true)})
+        .catch(err => {console.log(err)})
     }
 
     componentDidMount() {
@@ -151,7 +162,7 @@ class Portfolio extends Component {
                                 <p>Approximate Price: {this.state.prices[stock.stock_symbol]}</p>
                                 <button onClick={() => this.buy(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Buy</button>
                                 <button onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button>
-                                <button onClick={() => this.remove(stock.id, stock.stocks_bought_number)}>Remove</button>
+                                <button onClick={() => this.remove(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Remove</button>
                             </div>
                         )
                     })}
