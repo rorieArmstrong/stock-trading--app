@@ -11,7 +11,8 @@ class Search extends Component {
             search: false,
             query: '',
             results: [],
-            userID: null
+            userID: null,
+            searched: ''
         }
     };
 
@@ -19,8 +20,10 @@ class Search extends Component {
         this.setState({query: e.target.value})
     }
 
-    getData = (query) => {
-        let results = stocks.search(query)
+    getData = () => {
+        event.preventDefault()
+        this.setState({searched: this.state.query})
+        let results = stocks.search(this.state.query)
         console.log(results)
         this.setState({search: true})
         this.setState({results: results})
@@ -35,6 +38,7 @@ class Search extends Component {
             }, {headers:{'Content-Type': 'application/json'}})
         .then(res => {console.log(res)})
         .catch(error => {console.log(error)})
+        window.alert('Stock added to your watchlist')
     }
     
     componentDidMount() {
@@ -46,15 +50,14 @@ class Search extends Component {
         if (!this.state.search) {
             return (
                 <div>
-                    <form onSubmit={() => this.getData(this.state.query)}>
-                        <label>Search: 
+                    <form className="searchForm" onSubmit={() => this.getData()}>
                         <input 
+                                id="searchBox"
                                 type='text' 
                                 onChange={this.handleChange} 
                                 value={this.state.query} 
                                 name='query' 
                                 placeholder='Search'/>
-                        </label>
                         <button type='submit'>Search</button>
                     </form>
                 </div>
@@ -64,29 +67,39 @@ class Search extends Component {
             return (
                 <div>
                     <div>
-                        <form onSubmit={() => this.getData(this.state.query)}>
-                            <label>Search: 
+                        <form className="searchForm" onSubmit={() => this.getData()}>
                             <input 
                                     type='text' 
                                     onChange={this.handleChange} 
                                     value={this.state.query} 
                                     name='query' 
                                     placeholder='Search'/>
-                            </label>
+
                             <button type='submit'>Search</button>
                         </form>
                     </div>
-                    <div>
-                        <h3>Results for {this.state.query}</h3>
-                        {this.state.results.map(res => {
+                    <div className="searchResults">
+                        <h3>Results for {this.state.searched}</h3>
+                        <table className="searchTable">
+                            <thead>
+                                <tr>
+                                    <th className="tableCompany">Company Name</th>
+                                    <th className="tableSymbol">Company Symbol</th>
+                                    <th className="tableButton"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        {this.state.results.map(res =>{
                             return(
-                                <div key={res.ticker}>
-                                    <h3>{res.name}</h3>
-                                    <p>{res.ticker}</p>
-                                    <button onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button>
-                                </div>
+                                <tr key={res.ticker}>
+                                    <td className="tableCompany">{res.name}</td>
+                                    <td className="tableSymbol">{res.ticker}</td>
+                                    <td className="tableButton btn btn-black"><button id="addButton" onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button></td>
+                                </tr>
                             )
                         })}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             )
