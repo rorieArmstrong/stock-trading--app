@@ -50,16 +50,15 @@ class Search extends Component {
         if (!this.state.search) {
             return (
                 <div>
-                    <form onSubmit={() => this.getData()}>
-                        <label>Search: 
+                    <form className="searchForm" onSubmit={() => this.getData()}>
                         <input 
+                                id="searchBox"
                                 type='text' 
                                 onChange={this.handleChange} 
                                 value={this.state.query} 
                                 name='query' 
                                 placeholder='Search'/>
-                        </label>
-                        <button type='submit'>Search</button>
+                        <button className="btn btn-dark" type='submit'>Search</button>
                     </form>
                 </div>
             )
@@ -68,29 +67,40 @@ class Search extends Component {
             return (
                 <div>
                     <div>
-                        <form onSubmit={() => this.getData()}>
-                            <label>Search: 
+                        <form className="searchForm" onSubmit={() => this.getData()}>
                             <input 
+                                    id="searchBox"
                                     type='text' 
                                     onChange={this.handleChange} 
                                     value={this.state.query} 
                                     name='query' 
                                     placeholder='Search'/>
-                            </label>
-                            <button type='submit'>Search</button>
+
+                            <button className="btn btn-dark" type='submit'>Search</button>
                         </form>
                     </div>
-                    <div>
+                    <div className="searchResults">
                         <h3>Results for {this.state.searched}</h3>
-                        {this.state.results.map(res => {
+                        <table className="searchTable">
+                            <thead>
+                                <tr>
+                                    <th className="tableCompany">Company Name</th>
+                                    <th className="tableSymbol">Company Symbol</th>
+                                    <th className="tableButton"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        {this.state.results.map(res =>{
                             return(
-                                <div key={res.ticker}>
-                                    <h3>{res.name}</h3>
-                                    <p>{res.ticker}</p>
-                                    <button id="addButton" onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button>
-                                </div>
+                                <tr key={res.ticker}>
+                                    <td className="tableCompany">{res.name}</td>
+                                    <td className="tableSymbol">{res.ticker}</td>
+                                    <td className="tableButton"><button className="btn btn-dark" id="addButton" onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button></td>
+                                </tr>
                             )
                         })}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             )

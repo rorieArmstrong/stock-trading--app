@@ -6,7 +6,7 @@
 <div class="sidenav">
   <div class="login-main-text">
     <h2>Signup Page</h2><br />
-    <p>To use the services of Portfolio.io service, you need to create a free account. Please register your account using the following form. To register, please remeber:  </p><br />
+    <p>To use Portfolio.io, you need to create a free account. Please register your account using the following form. To register, please remember:  </p><br />
     <ul>
       <li>Your password can’t be too similar to your other personal information.</li>
       <li>Your password must contain at least 8 characters.</li>
@@ -20,6 +20,10 @@
     <div class="register-form">
       <form method="POST" class="formContainer">
         {% csrf_token %}
+        {{form.errors.username}}
+        {{form.errors.email}}
+        {{form.errors.password1}}
+        {{form.errors.password2}}
         <div class="form-group">
           <label for="id_username">Username:</label><br> 
           <input type="text" name="username" maxlength="150" autofocus=""
@@ -39,7 +43,7 @@
           <input type="password" name="password2"
               autocomplete="new-password" required="" id="id_password2" placeholder="********" class="width100">
         </div>
-        <button type="submit" class="btn btn-black">Signup</button>
+        <button type="submit" class="btn btn-dark">Signup</button>
       </form>
     </div>
   </div>
