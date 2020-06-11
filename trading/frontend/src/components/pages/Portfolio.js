@@ -47,7 +47,7 @@ class Portfolio extends Component {
         return price
     }
 
-    buy = async (id, symbol, current) => {
+    buy = async (id, symbol, current) => { //id and current look useless?
         // buy an amount of stocks and update the balance and amount in database
         let price = this.state.prices[symbol]
         let amount = await prompt("How many stocks would you like to buy at " + price, 1);
@@ -141,33 +141,71 @@ class Portfolio extends Component {
         this.onLoad()
     }
 
+    watchlist(){
+        const unique = [...new Set(this.state.data.map(stock => stock.stock_symbol))]
+        return(
+        unique.map(stock => {
+            return(
+                <React.Fragment>
+                <h3>{stock}</h3>
+                <p>Current Price: £{this.state.prices[stock]}</p>
+                <button onClick={() => this.buy(stock.id, stock, stock.stocks_bought_number)}>Buy</button>
+                </React.Fragment>
+            )
+        })
+        )
+    }
+
     render() {
         if(this.state.loading == true) {
             return <div> Loading </div>
         }
         return (
+            <React.Fragment>
             <div>
                 <div key='1'>
                     <h3>Value: {}</h3>
                     <h3>balance: {this.state.balance}</h3>
                     <Link to='/d/search'><button>Add Stock to Watchlist</button></Link>
                 </div>
+                <div>
+                    {this.watchlist()}
+                </div>
                 <div key='2'>
+                    <h2>Orders</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Symbol</th>
+                                <th>Amount</th>
+                                <th>Price</th>
+                                <th>Price of purchase</th>
+                                <th>Time of purchase</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                     {this.state.data.map(stock => {
-                        return(
-                            <div>
-                                <h3>{stock.stock_symbol}</h3>
-                                <p>Amout: {stock.stocks_bought_number}</p>
-                                <p>Bought at: {stock.bought_at_price}</p> 
-                                <p>Approximate Price: {this.state.prices[stock.stock_symbol]}</p>
-                                <button onClick={() => this.buy(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Buy</button>
-                                <button onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button>
-                                <button onClick={() => this.remove(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Remove</button>
-                            </div>
-                        )
-                    })}
+                        if (stock.stocks_bought_number > 0)
+                            return (
+                            <tr key={stock.id}>
+                                <td>{stock.id}</td>
+                                <td>{stock.stock_symbol}</td>
+                                <td>{stock.stocks_bought_number}</td>
+                                <td>{this.state.prices[stock.stock_symbol]}</td>
+                                <td>{stock.bought_at_price}</td>
+                                <td>{stock.bought_at_time}</td>
+                                <td><button onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button></td>
+                                <td><button onClick={() => this.remove(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Close</button></td>
+                            </tr>
+                            )
+                        }   
+                    )}
+                    </tbody>
+                    </table>
                 </div>
             </div>
+            </React.Fragment>
         );
     }
 }
