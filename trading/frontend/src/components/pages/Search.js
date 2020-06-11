@@ -11,7 +11,8 @@ class Search extends Component {
             search: false,
             query: '',
             results: [],
-            userID: null
+            userID: null,
+            searched: ''
         }
     };
 
@@ -19,8 +20,10 @@ class Search extends Component {
         this.setState({query: e.target.value})
     }
 
-    getData = (query) => {
-        let results = stocks.search(query)
+    getData = () => {
+        event.preventDefault()
+        this.setState({searched: this.state.query})
+        let results = stocks.search(this.state.query)
         console.log(results)
         this.setState({search: true})
         this.setState({results: results})
@@ -35,6 +38,7 @@ class Search extends Component {
             }, {headers:{'Content-Type': 'application/json'}})
         .then(res => {console.log(res)})
         .catch(error => {console.log(error)})
+        window.alert('Stock added to your watchlist')
     }
     
     componentDidMount() {
@@ -46,7 +50,7 @@ class Search extends Component {
         if (!this.state.search) {
             return (
                 <div>
-                    <form onSubmit={() => this.getData(this.state.query)}>
+                    <form onSubmit={() => this.getData()}>
                         <label>Search: 
                         <input 
                                 type='text' 
@@ -64,7 +68,7 @@ class Search extends Component {
             return (
                 <div>
                     <div>
-                        <form onSubmit={() => this.getData(this.state.query)}>
+                        <form onSubmit={() => this.getData()}>
                             <label>Search: 
                             <input 
                                     type='text' 
@@ -77,7 +81,7 @@ class Search extends Component {
                         </form>
                     </div>
                     <div>
-                        <h3>Results for {this.state.query}</h3>
+                        <h3>Results for {this.state.searched}</h3>
                         {this.state.results.map(res => {
                             return(
                                 <div key={res.ticker}>
