@@ -29,12 +29,8 @@ class Portfolio extends Component {
 
     getPrice = async (symbol) => {
         let price = null
-        await axios({
-            "method":"GET",
-            "url":`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=brgc7g7rh5r8gtveo3hg`,
-            "headers": {
-                "content-type":"text/json"
-            },
+        await axios.get(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=brgc7g7rh5r8gtveo3hg`,
+            {"headers": {"content-type":"text/json"},
         })
         .then((response) => {
             this.setState({prices: {...this.state.prices, [symbol]: response.data.c}})
@@ -81,7 +77,8 @@ class Portfolio extends Component {
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been purchased')
             }
-        }else{
+        }else if(amount === null){}
+        else{
             window.alert('You do not have enough funds in your account!')
         }
     }
@@ -116,7 +113,8 @@ class Portfolio extends Component {
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been sold')
             }
-        }else{
+        }else if(amount === null){}
+        else{
             window.alert('You do not have enough stocks in this trade!')
         }
     }
@@ -160,7 +158,7 @@ class Portfolio extends Component {
                 <div className="single-stock">
                 <p className="stock-name">{stock}</p>
                 <p>Current Price: ${this.state.prices[stock]}</p>
-                <button  className = "btn btn-dark" onClick={() => this.buy(stock.id, stock, stock.stocks_bought_number)}>Buy</button>
+                <button  className = "btn btn-dark" data-test='buyButton' onClick={() => this.buy(stock.id, stock, stock.stocks_bought_number)}>Buy</button>
                 </div>
                 </React.Fragment>
             )
@@ -183,9 +181,6 @@ class Portfolio extends Component {
     }
 
     render() {
-        if(this.state.loading == true) {
-            return <div> Loading </div>
-        }
         return (
             <React.Fragment>
             <div className="stock-table">
@@ -224,8 +219,8 @@ class Portfolio extends Component {
                                 <td>${this.state.prices[stock.stock_symbol]}</td>
                                 <td>${stock.bought_at_price}</td>
                                 <td>{this.timeConvert(stock.bought_at_time)}</td>
-                                <td><button className="btn btn-dark" onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button></td>
-                                <td><button className="btn btn-danger" onClick={() => this.remove(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Close</button></td>
+                                <td><button className="btn btn-dark" data-test='sellButton' onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button></td>
+                                <td><button className="btn btn-danger" data-test='removeButton' onClick={() => this.remove(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Close</button></td>
                             </tr>
                             )
                         }

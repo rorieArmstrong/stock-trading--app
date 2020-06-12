@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Portfolio from '../components/pages/Portfolio';
-import axios from 'axios';
 import {shallow, configure} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -23,60 +22,126 @@ jest.mock('axios', () => ({
                     ]
             })
         }
-    }
-    ,
+        if (url == `https://finnhub.io/api/v1/quote?symbol=TSLA&token=brgc7g7rh5r8gtveo3hg`){
+            return Promise.resolve({
+                data:{c: 10}
+            })
+        }
+        if (url == `https://finnhub.io/api/v1/quote?symbol=MSFT&token=brgc7g7rh5r8gtveo3hg`){
+            return Promise.resolve({
+                data:{c: 20}
+            })
+        }
+    },
+    patch: () => {
+        return Promise.resolve({})
+    },
+    put: () => {
+        return Promise.resolve({})
+    },
+    delete: () => {
+        return Promise.resolve({})
+    },
     
     defaults: { 
         withCredentials: true,
         xsrfCookieName: 'csrftoken',
         xsrfHeaderName: "X-CSRFTOKEN"
      }
-  }));
+}));
 
+jest.spyOn(window, 'alert').mockImplementation(() => {});
+jest.spyOn(window, 'prompt').mockImplementation(() => {return 1});
+// jest.spyOn(window.locaton, 'reload').mockImplementation(() => {});
+delete window.location;
+window.location = { reload: jest.fn() };
 
 describe('Portfolio', () => {
     const wrapper = shallow(<Portfolio />)
+    const event = { preventDefault: jest.fn() };
     
     it('fetches prices from api', async () => {
 
     })
 
     it('buys a stock', async () => {
-
+        (wrapper.find('[data-test="buyButton"]').at(1)).simulate('click', event);
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
     })
 
     it('sells a stock', async () => {
-        
+        (wrapper.find('[data-test="sellButton"]').at(1)).simulate('click', event);
+        setTimeout(() => {
+            expect(sell).toHaveBeenCalled()
+        }, 4000)
     })
 
     it('sells all of a stock', async () => {
-        
+        (wrapper.find('[data-test="removeButton"]').at(1)).simulate('click', event);
+        setTimeout(() => {
+            expect(remove).toHaveBeenCalled()
+        }, 4000)
     })
 
-    it('fetches the data', async () => {
-        const getSpy = jest.spyOn(axios, 'get');
-        const wrapper = shallow(<Portfolio />)
-        expect(getSpy).toBeCalled();
+    it('puts if current === 0', () => {
+        wrapper.instance().buy(87, 'MSFT', 0)
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
     })
 
-    it('loads a table', async () => {
-
+    it('cancels if amount > current', () => {
+        wrapper.instance().sell(87, 'MSFT', 1000)
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
     })
 
-    it('calcuates the value of the portfolio', async () => {
-        
-        // state={
-        //     balance:10000
-        // }
-
-
+    it('deletes if amount == 0', () => {
+        wrapper.instance().remove(87, 'MSFT', 0)
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
     })
 
-    it('renders', async () => {
-
+    it('cancels if you dont have enough funds', () => {
+        wrapper.instance().buy(87, 'MSFT', 100)
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
     })
 
-    it('creates the watchlist', async () => {
-        
+    it('cancels if you dont have enough funds', () => {
+        jest.spyOn(window, 'prompt').mockImplementation(() => {return 100000});
+        wrapper.instance().buy(87, 'MSFT', 100)
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
     })
+    
+    it('does nothing if canceled', () => {
+        jest.spyOn(window, 'prompt').mockImplementation(() => {return null});
+        wrapper.instance().buy(87, 'MSFT', 0)
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
+    }) 
+
+    it('does nothing if canceled', () => {
+        jest.spyOn(window, 'prompt').mockImplementation(() => {return 10000});
+        wrapper.instance().sell(87, 'MSFT', 0)
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
+    }) 
+
+    it('does nothing if canceled', () => {
+        jest.spyOn(window, 'prompt').mockImplementation(() => {return 0});
+        wrapper.instance().sell(87, 'MSFT', 0)
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
+    }) 
 })
