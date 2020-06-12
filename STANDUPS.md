@@ -72,3 +72,20 @@ Get Django authentication working and react implemented. No Blockers
 * Igor
    * Testing, styling etc.
    * Testing, styling etc. No blockers.
+  
+### Friday 12/06
+* Huseyin
+   * Finished styling components and presentation.
+   * Today: Create a demo video and update README files
+
+* Rorie
+   * Finished testing all react components. Work on presentation
+   * Today: Finish off presentation
+  
+* Keir
+   * Finished styling components and presentation
+   * Today: Practice presentation, delete console.logs / unneccessary comments
+   
+* Igor
+   * Finished changing data structure of models and testing frontend
+   * Today: Practice presentation
