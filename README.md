@@ -1,4 +1,7 @@
 # stock-trading-app
+
+## Team Portfol.io: Igor, Keir, Huseyin, Rorie
+
 ## Instructions
 * You will need 2 terminal sessions, make sure you're in the project folder
 
