@@ -24,7 +24,27 @@ We were aiming to make a chart with different (user selected) stocks, showing th
 * Portfolio value is then tracked based on how much shares you own of particular companies at a given price  
 
 ## Project Tree
-
+├───trading
+│   ├───accounts
+│   ├───frontend
+│   │   ├───migrations
+│   │   ├───src
+│   │   │   ├───components
+│   │   │   │   ├───containers
+│   │   │   │   └───pages
+│   │   │   ├───public
+│   │   │   └───tests
+│   │   ├───static
+│   │   │   └───frontend
+│   │   └───templates
+│   │       └───frontend
+│   ├───static
+│   ├───templates
+│   │   └───registration
+│   ├───trader
+│   │   └───migrations
+│   └───trading
+└───__mocks__
 
 ## Technologys
 
