@@ -25,14 +25,13 @@ class Graph extends Component {
                 arr.push(stock.stock_symbol)
             })
             arr = arr.filter((x, i, a) => a.indexOf(x) === i)
-            console.log(arr)
             this.setState({watchlist: arr})})
         .catch(error => {console.log(error)})
     }
 
     render() {
         return (
-            <div class="tradingWidget">
+            <div className="tradingWidget">
             <TradingViewWidget
                 symbol="NASDAQ:AAPL"
                 theme={Themes.DARK}

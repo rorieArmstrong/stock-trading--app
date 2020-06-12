@@ -5,9 +5,19 @@ import Portfolio from "../components/pages/Portfolio"
 import { MemoryRouter } from 'react-router';
 import {mount, configure} from "enzyme"
 import Adapter from 'enzyme-adapter-react-16';
+import axios from 'axios'
 
 configure({ adapter: new Adapter() });
 
+jest.mock('axios', () => ({
+  get: {},
+  
+  defaults: { 
+      withCredentials: true,
+      xsrfCookieName: 'csrftoken',
+      xsrfHeaderName: "X-CSRFTOKEN"
+   }
+}));
 
 describe('App.js is rendering: ', ()=>{
   it('renders without crashing', ()=>{

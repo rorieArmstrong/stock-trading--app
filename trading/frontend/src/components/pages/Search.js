@@ -20,8 +20,7 @@ class Search extends Component {
         this.setState({query: e.target.value})
     }
 
-    getData = () => {
-        event.preventDefault()
+    getData = (event) => {
         this.setState({searched: this.state.query})
         let results = stocks.search(this.state.query)
         console.log(results)
@@ -50,64 +49,25 @@ class Search extends Component {
         if (!this.state.search) {
             return (
                 <div>
-                    <form className="searchForm" onSubmit={() => this.getData()}>
+                    <form onSubmit={() => this.getData()}>
+                        <label>Search: 
                         <input 
-                                id="searchBox"
                                 type='text' 
                                 onChange={this.handleChange} 
                                 value={this.state.query} 
                                 name='query' 
                                 placeholder='Search'/>
+                        </label>
                         <button type='submit'>Search</button>
                     </form>
                 </div>
             )
         }
-        else if(this.state.results !== undefined){
+        else {
             return (
                 <div>
                     <div>
-                        <form className="searchForm" onSubmit={() => this.getData()}>
-                            <input 
-                                    type='text' 
-                                    onChange={this.handleChange} 
-                                    value={this.state.query} 
-                                    name='query' 
-                                    placeholder='Search'/>
-
-                            <button type='submit'>Search</button>
-                        </form>
-                    </div>
-                    <div className="searchResults">
-                        <h3>Results for {this.state.searched}</h3>
-                        <table className="searchTable">
-                            <thead>
-                                <tr>
-                                    <th className="tableCompany">Company Name</th>
-                                    <th className="tableSymbol">Company Symbol</th>
-                                    <th className="tableButton"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                        {this.state.results.map(res =>{
-                            return(
-                                <tr key={res.ticker}>
-                                    <td className="tableCompany">{res.name}</td>
-                                    <td className="tableSymbol">{res.ticker}</td>
-                                    <td className="tableButton btn btn-black"><button id="addButton" onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button></td>
-                                </tr>
-                            )
-                        })}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    <div>
-                        <form onSubmit={() => this.getData(this.state.query)}>
+                        <form onSubmit={() => this.getData}>
                             <label>Search: 
                             <input 
                                     type='text' 
@@ -120,13 +80,20 @@ class Search extends Component {
                         </form>
                     </div>
                     <div>
-                        <h3>
-                            There was an error in the search!
-                        </h3>
+                        <h3>Results for {this.state.searched}</h3>
+                        {this.state.results.map(res => {
+                            return(
+                                <div key={res.ticker}>
+                                    <h3>{res.name}</h3>
+                                    <p>{res.ticker}</p>
+                                    <button id="addButton" onClick={() => this.addToWatchlist(res.ticker)}>Add to watchlist</button>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             )
-        }
+        } 
     }
 }
 
