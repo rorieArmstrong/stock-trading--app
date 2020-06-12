@@ -61,6 +61,16 @@ We were aiming to make a chart with different (user selected) stocks, showing th
 * Unittest  
 * Jest  
 * Enzyme  
+## Database schemas
+### Stocks
+| ID | stock_symbol | stocks_bought_numer | bought_at_price | bought_at_time | userID_id (FK) |
+|----|--------------|---------------------|-----------------|----------------|----------------|
+
+### Users
+We extended the standard Django user table by including the balance column
+
+| ID | password | last_login | is_superuser | username | first_name | last_name | email | is_staff | is_active | date_joined | balance |
+|----|----------|------------|--------------|----------|------------|-----------|-------|----------|-----------|-------------|---------|
 
 ## User journeys
 As a User, I want to be able to create an account so I can login.  
@@ -87,13 +97,3 @@ I can pick to view the chart (provided by TradingView widget) which has my watch
 
 On logout the balance and watchlist is persistent so when user logs back in they are able to see everything as it were. The only variable would be the portfolio value which is dictated by the current pricing of stocks they hold.  
 
-## Database schemas
-### Stocks
-| ID | stock_symbol | stocks_bought_numer | bought_at_price | bought_at_time | userID_id (FK) |
-|----|--------------|---------------------|-----------------|----------------|----------------|
-
-### Users
-We extended the standard Django user table by including the balance column
-
-| ID | password | last_login | is_superuser | username | first_name | last_name | email | is_staff | is_active | date_joined | balance |
-|----|----------|------------|--------------|----------|------------|-----------|-------|----------|-----------|-------------|---------|
