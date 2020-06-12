@@ -1,5 +1,5 @@
 # stock-trading-app
-## Instuctions
+## Instructions
 * You will need 2 terminal sessions, make sure you're in the project folder
 
 * To install all required packages:
@@ -62,11 +62,6 @@ We were aiming to make a chart with different (user selected) stocks, showing th
 * Jest  
 * Enzyme  
 
-
-## Wireframe
-sql/postgres database  
-django backend  
-react frontend  
 ## User journeys
 As a User, I want to be able to create an account so I can login.  
 
@@ -94,14 +89,11 @@ On logout the balance and watchlist is persistent so when user logs back in they
 
 ## Database schemas
 ### Stocks
-| Id | user_id (fk) | Stock | Amount |
-|:--:|:------------:|:-----:|:------:|
-|  1 |       1      |  APPL |   10   |
-|  2 |       1      |  MSFT |    5   |
+| ID | stock_symbol | stocks_bought_numer | bought_at_price | bought_at_time | userID_id (FK) |
+|----|--------------|---------------------|-----------------|----------------|----------------|
 
 ### Users
-| id |        email       |     password    |   username  | balance |
-|:--:|:------------------:|:---------------:|:-----------:|:-------:|
-|  1 |    bob@gmail.com   |    ***    |  bob_smith  |   10000 |
-|  2 |   kim@yahoo.co.uk  |    ***    |     Kim     |   500   |
-|  3 | spam@microsoft.com | *** | test_user_1 |    0    |
+We extended the standard Django user table by including the balance column
+
+| ID | password | last_login | is_superuser | username | first_name | last_name | email | is_staff | is_active | date_joined | balance |
+|----|----------|------------|--------------|----------|------------|-----------|-------|----------|-----------|-------------|---------|
