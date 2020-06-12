@@ -45,7 +45,7 @@ class Portfolio extends Component {
         return price
     }
 
-    buy = async (id, symbol, current) => { //id and current look useless?
+    buy = async (id, symbol, current) => {
         // buy an amount of stocks and update the balance and amount in database
         let price = this.state.prices[symbol]
         let amount = await prompt("How many stocks would you like to buy at " + price, 1);
@@ -159,7 +159,7 @@ class Portfolio extends Component {
                 <React.Fragment>
                 <div className="single-stock">
                 <p className="stock-name">{stock}</p>
-                <p>Current Price: £{this.state.prices[stock]}</p>
+                <p>Current Price: ${this.state.prices[stock]}</p>
                 <button  className = "btn btn-dark" onClick={() => this.buy(stock.id, stock, stock.stocks_bought_number)}>Buy</button>
                 </div>
                 </React.Fragment>
@@ -190,8 +190,8 @@ class Portfolio extends Component {
             <React.Fragment>
             <div className="stock-table">
                 <div className = "table-top" key='1'>
-                  <h2>Value: {this.sum(this.state.data)}</h2>
-                  <h2>Balance: {this.state.balance}</h2>
+                  <h2>Value: ${this.sum(this.state.data)}</h2>
+                  <h2>Balance: ${this.state.balance}</h2>
                 </div>
                 <div className="watchlist-orders-container">
                 <div className="watchlist">
@@ -221,8 +221,8 @@ class Portfolio extends Component {
                                 <td>{stock.id}</td>
                                 <td>{stock.stock_symbol}</td>
                                 <td>{stock.stocks_bought_number}</td>
-                                <td>£{this.state.prices[stock.stock_symbol]}</td>
-                                <td>£{stock.bought_at_price}</td>
+                                <td>${this.state.prices[stock.stock_symbol]}</td>
+                                <td>${stock.bought_at_price}</td>
                                 <td>{this.timeConvert(stock.bought_at_time)}</td>
                                 <td><button className="btn btn-dark" onClick={() => this.sell(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Sell</button></td>
                                 <td><button className="btn btn-danger" onClick={() => this.remove(stock.id, stock.stock_symbol, stock.stocks_bought_number)}>Close</button></td>
