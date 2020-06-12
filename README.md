@@ -47,6 +47,20 @@ We were aiming to make a chart with different (user selected) stocks, showing th
 └───__mocks__  
 
 ## Technologys
+* React  
+* NPM  
+* Webpack  
+* Babel  
+* Axios  
+* Tradingview Widget  
+* Bootstrap  
+* Pipenv  
+* Django  
+* Django REST Framework  
+* SQLite  
+* Unittest  
+* Jest  
+* Enzyme  
 
 
 ## Wireframe
