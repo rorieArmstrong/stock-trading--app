@@ -36,6 +36,9 @@ jest.mock('axios', () => ({
     patch: () => {
         return Promise.resolve({})
     },
+    post: () => {
+        return Promise.resolve({})
+    },
     put: () => {
         return Promise.resolve({})
     },
@@ -116,6 +119,14 @@ describe('Portfolio', () => {
     it('cancels if you dont have enough funds', () => {
         jest.spyOn(window, 'prompt').mockImplementation(() => {return 100000});
         wrapper.instance().buy(87, 'MSFT', 100)
+        setTimeout(() => {
+            expect(buy).toHaveBeenCalled()
+        }, 4000)
+    })
+
+    it('cancels if you dont buy any stocks', () => {
+        jest.spyOn(window, 'prompt').mockImplementation(() => {return 100000});
+        wrapper.instance().buy(null, 'MSFT', null)
         setTimeout(() => {
             expect(buy).toHaveBeenCalled()
         }, 4000)

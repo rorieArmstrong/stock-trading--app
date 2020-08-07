@@ -51,7 +51,7 @@ describe('Graph.js is rendering: ', ()=>{
     });
 
     it('has a watchlist of MSFT and TSLA', () => {
-        let wrapper = shallow(<Graph/>)
+        let wrapper = mount(<Graph/>)
         setTimeout(() => {
             expect(wrapper.state('watchlist')).toEqual(['MSFT','TSLA'])
         }, 4000)
@@ -60,6 +60,14 @@ describe('Graph.js is rendering: ', ()=>{
     it('gets data from the api', () => {
         let wrapper = mount(<Graph/>)
         setTimeout(() => {
+            expect(wrapper.state('watchlist')).toEqual(['MSFT','TSLA'])
+        }, 5000)
+    })
+
+    it('gets watchlist from the api', () => {
+        let wrapper = mount(<Graph/>)
+        setTimeout(() => {
+            expect(wrapper.state('userID')).toEqual(1)
             expect(wrapper.state('watchlist')).toEqual(['MSFT','TSLA'])
         }, 5000)
     })

@@ -46,13 +46,10 @@ class Portfolio extends Component {
         let price = this.state.prices[symbol]
         let amount = await prompt("How many stocks would you like to buy at " + price, 1);
         let cost = (Number(amount)*price)
-        console.log(id, symbol, current, amount, this.state.userID, cost)
         if (cost <= this.state.balance){
-            console.log(this.state.balance - cost)
             axios.patch('/api/users/'+this.state.userID+'/',{
                 "balance": parseFloat(this.state.balance - cost).toFixed(2)
             }, {headers:{'Content-Type': 'application/json'}})
-            .then(res => {console.log(res)})
             .catch(error => {console.log(error)})
             if (current === 0 && amount != null){
                 axios.put('/api/stocks/'+id+'/',{
@@ -61,7 +58,6 @@ class Portfolio extends Component {
                     "bought_at_price": price,
                     "userID": this.state.userID
                     }, {headers:{'Content-Type': 'application/json'}})
-                .then(res => {console.log(res)})
                 .then(() => {window.location.reload(true)})
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been purchased')
@@ -72,7 +68,6 @@ class Portfolio extends Component {
                     "bought_at_price": price,
                     "userID": this.state.userID
                     }, {headers:{'Content-Type': 'application/json'}})
-                .then(res => {console.log(res)})
               .then(() => {window.location.reload(true)})
                 .catch(error => {console.log(error)})
                 window.alert('Stocks have been purchased')
@@ -87,16 +82,12 @@ class Portfolio extends Component {
         // sell an amount of stocks and update the balance and amount in database
         let price = this.state.prices[symbol]
         let amount = await prompt("How many stocks would you like to sell at " + price, 1);
-        console.log(amount)
         let gain = Number(amount*price)
-        console.log(id, symbol, current, amount, this.state.userID, gain)
         // patch
         if (amount <= current){
-            console.log((this.state.balance + gain), this.state.userID)
             axios.patch('/api/users/'+this.state.userID+'/',{
                 "balance": parseFloat(this.state.balance + gain).toFixed(2)
             }, {headers:{'Content-Type': 'application/json'}})
-            .then(res => {console.log(res)})
             .catch(error => {console.log(error)})
             if ((current - amount) === 0){
                 axios.delete('/api/stocks/'+id+'/')
@@ -126,11 +117,9 @@ class Portfolio extends Component {
             axios.patch('/api/users/'+this.state.userID+'/',{
                 "balance": parseFloat(this.state.balance + gain).toFixed(2)
             }, {headers:{'Content-Type': 'application/json'}})
-            .then(res => {console.log(res)})
             .catch(error => {console.log(error)})
         }
         axios.delete('/api/stocks/' + id + '/')
-        .then(res => {console.log(res)})
         .then(this.setState({updating: false}))
         .then(() => {window.location.reload(true)})
         .catch(err => {console.log(err)})
@@ -146,7 +135,6 @@ class Portfolio extends Component {
 
     componentDidMount() {
         this.onLoad()
-        console.log(this.state.prices)
     }
 
     watchlist(){
@@ -176,7 +164,6 @@ class Portfolio extends Component {
             minute: 'numeric',
             second: 'numeric'
         }).format(isoFormat);
-        console.log(isoFormat)
         return newFormat
     }
 
